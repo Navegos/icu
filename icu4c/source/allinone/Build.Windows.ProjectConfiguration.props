@@ -67,16 +67,15 @@
       Note: This version must match the version below in the ARM64 section for AdditionalLibraryDirectories
   -->
   <PropertyGroup Condition="'$(Platform)'=='ARM'">
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
     <WindowsSDKDesktopARMSupport>true</WindowsSDKDesktopARMSupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Platform)'=='ARM64'">
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
     <WindowsSDKDesktopARM64Support>true</WindowsSDKDesktopARM64Support>
   </PropertyGroup>
   <PropertyGroup>
     <!-- We need to explicitly set the target version to Windows 7. -->
-    <Win32_WinNTVersion>0x0601</Win32_WinNTVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <Win32_WinNTVersion>0x0A00</Win32_WinNTVersion>
   </PropertyGroup>
   <!-- Options that are common to *all* configurations for *all* projects. -->
   <ItemDefinitionGroup>
