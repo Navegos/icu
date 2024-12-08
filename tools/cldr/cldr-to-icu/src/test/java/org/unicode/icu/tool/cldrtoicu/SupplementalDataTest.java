@@ -22,7 +22,6 @@ import org.unicode.cldr.api.CldrValue;
 import org.unicode.cldr.tool.LikelySubtags;
 import org.unicode.cldr.util.LanguageTagCanonicalizer;
 import org.unicode.cldr.util.LocaleIDParser;
-import org.unicode.cldr.util.SupplementalDataInfo;
 import org.unicode.icu.tool.cldrtoicu.testing.FakeDataSupplier;
 
 import com.google.common.base.Joiner;
@@ -41,9 +40,7 @@ public class SupplementalDataTest {
     public static void loadRegressionData() {
         Path cldrRoot = Paths.get(System.getProperty("CLDR_DIR"));
         regressionData = SupplementalData.create(CldrDataSupplier.forCldrFilesIn(cldrRoot));
-        SupplementalDataInfo sdi =
-            SupplementalDataInfo.getInstance(cldrRoot.resolve("common/supplemental").toString());
-        likelySubtags = new LikelySubtags(sdi);
+        likelySubtags = new LikelySubtags();
     }
 
     @Test

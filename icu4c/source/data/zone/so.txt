@@ -1,7 +1,7 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 so{
-    Version{"37"}
     zoneStrings{
         "Africa:Abidjan"{
             ec{"Abidjaan"}
@@ -213,6 +213,9 @@ so{
         "America:Chihuahua"{
             ec{"Jiwaahuu"}
         }
+        "America:Ciudad_Juarez"{
+            ec{"Magaalada Juarez"}
+        }
         "America:Coral_Harbour"{
             ec{"Atikokaan"}
         }
@@ -405,14 +408,8 @@ so{
         "America:New_York"{
             ec{"Niyuu Yook"}
         }
-        "America:Nipigon"{
-            ec{"Nibiigoon"}
-        }
         "America:Nome"{
             ec{"Noom"}
-        }
-        "America:Noronha"{
-            ec{"Noroonha"}
         }
         "America:North_Dakota:Beulah"{
             ec{"Biyuulah, Waqooyiga Dakoota"}
@@ -429,12 +426,6 @@ so{
         "America:Panama"{
             ec{"Banaama"}
         }
-        "America:Pangnirtung"{
-            ec{"Bangnirtuung"}
-        }
-        "America:Paramaribo"{
-            ec{"Baramaribo"}
-        }
         "America:Phoenix"{
             ec{"Foonikis"}
         }
@@ -444,17 +435,11 @@ so{
         "America:Port_of_Spain"{
             ec{"Boort of Isbayn"}
         }
-        "America:Porto_Velho"{
-            ec{"Boorto Felho"}
-        }
         "America:Puerto_Rico"{
             ec{"Boorta Riiko"}
         }
         "America:Punta_Arenas"{
             ec{"Bunta Arinaas"}
-        }
-        "America:Rainy_River"{
-            ec{"Reyni Rifer"}
         }
         "America:Rankin_Inlet"{
             ec{"Raankin Inleet"}
@@ -516,9 +501,6 @@ so{
         "America:Thule"{
             ec{"Tuul"}
         }
-        "America:Thunder_Bay"{
-            ec{"Tanda Baay"}
-        }
         "America:Tijuana"{
             ec{"Tijuwaana"}
         }
@@ -536,9 +518,6 @@ so{
         }
         "America:Yakutat"{
             ec{"Yakutaat"}
-        }
-        "America:Yellowknife"{
-            ec{"Yelowneyf"}
         }
         "Antarctica:Casey"{
             ec{"Kaysee"}
@@ -614,9 +593,6 @@ so{
         }
         "Asia:Chita"{
             ec{"Jiita"}
-        }
-        "Asia:Choibalsan"{
-            ec{"Joybalsan"}
         }
         "Asia:Colombo"{
             ec{"Kolombo"}
@@ -787,7 +763,7 @@ so{
             ec{"Farow"}
         }
         "Atlantic:Madeira"{
-            ec{"Madeera"}
+            ec{"Madira"}
         }
         "Atlantic:Reykjavik"{
             ec{"Reykjafik"}
@@ -806,9 +782,6 @@ so{
         }
         "Australia:Broken_Hill"{
             ec{"Boroken Hil"}
-        }
-        "Australia:Currie"{
-            ec{"Kuriy"}
         }
         "Australia:Eucla"{
             ec{"Yukla"}
@@ -848,7 +821,7 @@ so{
             ec{"Atens"}
         }
         "Europe:Belgrade"{
-            ec{"Bilgaraydh"}
+            ec{"Belgaraydh"}
         }
         "Europe:Berlin"{
             ec{"Barliin"}
@@ -894,7 +867,7 @@ so{
             ec{"Jaarsey"}
         }
         "Europe:Kiev"{
-            ec{"Kiyf"}
+            ec{"Kiyeef"}
         }
         "Europe:Kirov"{
             ec{"Kiroof"}
@@ -907,10 +880,10 @@ so{
             ld{"Waqtiga Xagaaga ee Biritishka"}
         }
         "Europe:Luxembourg"{
-            ec{"Luksembaag"}
+            ec{"Luksemberg"}
         }
         "Europe:Madrid"{
-            ec{"Maadriid"}
+            ec{"Madriid"}
         }
         "Europe:Mariehamn"{
             ec{"Maarihaam"}
@@ -969,9 +942,6 @@ so{
         "Europe:Ulyanovsk"{
             ec{"Ulyanofisk"}
         }
-        "Europe:Uzhgorod"{
-            ec{"Usgorod"}
-        }
         "Europe:Vaduz"{
             ec{"Faduus"}
         }
@@ -979,7 +949,7 @@ so{
             ec{"Fatikaan"}
         }
         "Europe:Vienna"{
-            ec{"Fiyaana"}
+            ec{"Fiyeena"}
         }
         "Europe:Vilnius"{
             ec{"Finiyuus"}
@@ -988,13 +958,10 @@ so{
             ec{"Folgograd"}
         }
         "Europe:Zagreb"{
-            ec{"Sagreb"}
-        }
-        "Europe:Zaporozhye"{
-            ec{"Saborosey"}
+            ec{"Saqrib"}
         }
         "Europe:Zurich"{
-            ec{"Surij"}
+            ec{"Suurikh"}
         }
         "Indian:Antananarivo"{
             ec{"Antananarifo"}
@@ -1059,8 +1026,8 @@ so{
         "Pacific:Guam"{
             ec{"Guwam"}
         }
-        "Pacific:Johnston"{
-            ec{"Joonston"}
+        "Pacific:Kanton"{
+            ec{"Kantoon"}
         }
         "Pacific:Kiritimati"{
             ec{"Kiritimaati"}
@@ -1290,11 +1257,6 @@ so{
             lg{"Waqtiga Shiinaha"}
             ls{"Waqtiga Caadiga Ah ee Shiinaha"}
         }
-        "meta:Choibalsan"{
-            ld{"Waqtiga Xagaaga ee Joybalsan"}
-            lg{"Waqtiga Joybalsan"}
-            ls{"Waqtiga Caadiga Ah ee Joybalsan"}
-        }
         "meta:Christmas"{
             ls{"Waqtiga Kirismas Aylaan"}
         }
@@ -1368,7 +1330,7 @@ so{
             ls{"Waqtiga Koonfurta Faransiiska & Antaarktik"}
         }
         "meta:GMT"{
-            ls{"Waqtiga Celceliska Giriinwij"}
+            ls{"Wakhtiga Giriinwij"}
         }
         "meta:Galapagos"{
             ls{"Waqtiga Galabagos"}
@@ -1461,6 +1423,9 @@ so{
             lg{"Wakhtiga Petropavlovsk-Kamchatski"}
             ls{"Wakhtiga Caadiga ah ee Petropavlovsk-Kamchatski"}
         }
+        "meta:Kazakhstan"{
+            ls{"Wakhtiga Kazakhistan"}
+        }
         "meta:Kazakhstan_Eastern"{
             ls{"Waqtiga Bariga Kasakhistaan"}
         }
@@ -1491,9 +1456,6 @@ so{
             lg{"Waqtiga Lod How"}
             ls{"Waqtiga Caadiga Ah ee Lod How"}
         }
-        "meta:Macquarie"{
-            ls{"Waqtiga Makquwariy Aylaan"}
-        }
         "meta:Magadan"{
             ld{"Waqtiga Xagaaga ee Magedan"}
             lg{"Watiga Magedan"}
@@ -1518,11 +1480,6 @@ so{
         }
         "meta:Mawson"{
             ls{"Waqtiga Mawson"}
-        }
-        "meta:Mexico_Northwest"{
-            ld{"Waqtiga Dharaarta ee Waqooyi-Galbeed Meksiko"}
-            lg{"Waqtiga Waqooyi-Galbeed Meksiko"}
-            ls{"Waqtiga Caadiga Ah ee Waqooyi-Galbeed Meksiko"}
         }
         "meta:Mexico_Pacific"{
             ld{"Waqtiga Dharaarta ee Baasifikada Meksiko"}
@@ -1567,9 +1524,9 @@ so{
             ls{"Waqtiga Niyuu"}
         }
         "meta:Norfolk"{
-            ld{"Waqtiga Xagaaga ee Noorfek Aylaan"}
-            lg{"Waqtiga Noorfek Aylaan"}
-            ls{"Waqtiga Caadiga Ah ee Noorfek Aylaan"}
+            ld{"Waqtiga Maalinta ee Norfolk Island"}
+            lg{"Waqtiga Norfolk Island"}
+            ls{"Waqtiga Caadiga ah ee Norfolk Island"}
         }
         "meta:Noronha"{
             ld{"Waqtiga Xagaaga ee Farnaando de Nooronha"}
@@ -1749,6 +1706,9 @@ so{
             ld{"Waqtiga Xagaaga ee Yekaterinbaag"}
             lg{"Waqtiga Yekaterinbaag"}
             ls{"Waqtiga Caadiga Ah ee Yekaterinbaag"}
+        }
+        "meta:Yukon"{
+            ls{"Waqtiga Yukon"}
         }
         regionFormat{"Waqtiga {0}"}
         regionFormatDaylight{"Waqtiga Dharaarta ee {0}"}

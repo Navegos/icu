@@ -1,5 +1,14 @@
 cmake_minimum_required(VERSION 3.0)
-project(double-conversion VERSION 3.1.5)
+project(double-conversion VERSION 3.3.0)
+
+option(BUILD_SHARED_LIBS "Build shared libraries (.dll/.so) instead of static ones (.lib/.a)" OFF)
+
+if(MSVC)
+  if(BUILD_SHARED_LIBS)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+  endif()
+  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /D_DEBUG /D_ITERATOR_DEBUG_LEVEL=2")
+endif()
 
 set(headers
     double-conversion/bignum.h
@@ -112,3 +121,13 @@ install(
     NAMESPACE "${namespace}"
     DESTINATION "${config_install_dir}"
 )
+
+if (MSVC AND BUILD_SHARED_LIBS)
+  # Install companion PDB for Visual Studio
+  install(
+    FILES $<TARGET_PDB_FILE:double-conversion>
+    TYPE BIN
+    OPTIONAL
+  )
+endif()
+

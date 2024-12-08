@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 ee{
     Countries{
         001{"xexeme"}
@@ -141,7 +142,6 @@ ee{
         IL{"Israel nutome"}
         IM{"Aisle of Man nutome"}
         IN{"India nutome"}
-        IO{"Britaintɔwo ƒe india ƒudome nutome"}
         IQ{"iraqdukɔ"}
         IR{"Iran nutome"}
         IS{"Aiseland nutome"}
@@ -296,5 +296,4 @@ ee{
         FK{"Falkland ƒudomekpowo (Islas Malvinas) nutome"}
         TL{"Ɣedzeƒe Timɔ nutome"}
     }
-    Version{"37"}
 }

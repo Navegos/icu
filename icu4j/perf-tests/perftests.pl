@@ -1,6 +1,6 @@
-#!/usr/local/bin/perl
+#!/usr/bin/env perl
 # * © 2016 and later: Unicode, Inc. and others.
-# * License & terms of use: http://www.unicode.org/copyright.html#License
+# * License & terms of use: http://www.unicode.org/copyright.html
 # *******************************************************************************
 # * Copyright (C) 2002-2012 International Business Machines Corporation and     *
 # * others. All Rights Reserved.                                                *
@@ -9,16 +9,17 @@
 use XML::LibXML;
 
 # Assume we are running within the icu4j root directory
-use lib 'src/com/ibm/icu/dev/test/perf';
+use lib '.';
 use Dataset;
-my $OS=$^O;
 
+my $OS=$^O;
 my $CLASSPATH;
-if ($OS eq "linux" || $OS eq "darwin") {
-	$CLASSPATH="../icu4j.jar:../tools/misc/out/lib/icu4j-tools.jar:out/bin";
+if ($^O eq "MSWin32") {
+	$CLASSPATH = './target/*;./target/dependency/*';
 } else {
-	$CLASSPATH="../icu4j.jar;../tools/misc/out/lib/icu4j-tools.jar;out/bin";
+	$CLASSPATH = './target/*:./target/dependency/*';
 }
+
 #---------------------------------------------------------------------
 
 # Methods to be tested.  Each pair represents a test method and
@@ -172,7 +173,7 @@ sub main {
 	   );
 	
     #  Outer loop runs through the locales to test
-    #     (Edit this list dirctly to make changes)
+    #     (Edit this list directly to make changes)
     #
     foreach  $locale (
 	   "en_US",

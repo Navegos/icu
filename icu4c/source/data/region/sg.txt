@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 sg{
     Countries{
         AD{"Andôro"}
@@ -92,7 +93,6 @@ sg{
         IE{"Irlânde"}
         IL{"Israëli"}
         IN{"Ênnde"}
-        IO{"Sêse tî Anglëe na Ngûyämä tî Ênnde"}
         IQ{"Irâki"}
         IR{"Iräan"}
         IS{"Islânde"}
@@ -226,5 +226,4 @@ sg{
         ZM{"Zambïi"}
         ZW{"Zimbäbwe"}
     }
-    Version{"37"}
 }

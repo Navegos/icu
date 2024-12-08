@@ -2,7 +2,7 @@
 #  ***********************************************************************
 #  * COPYRIGHT:
 #  * © 2016 and later: Unicode, Inc. and others.
-#  * License & terms of use: http://www.unicode.org/copyright.html#License
+#  * License & terms of use: http://www.unicode.org/copyright.html
 #  * Copyright (c) 2002-2006, International Business Machines Corporation
 #  * and others. All Rights Reserved.
 #  ***********************************************************************
@@ -141,7 +141,7 @@ sub compareLoop {
     my $testCommand = @{ $tests{$i} }[$j];
       if ($testCommand =~/--/) {
       	$custArgs = $& . $';	#The matched part and the right part
-      	$testCommand = $`;		#The left part for furthur processing
+      	$testCommand = $`;		#The left part for further processing
       } else { $custArgs = ''; }
       ($program, @argsAndTest) = split(/\ /, $testCommand);
       my $commandLine;

@@ -16,6 +16,7 @@ import static java.util.stream.Collectors.joining;
 import static org.unicode.cldr.api.CldrPath.parseDistinguishingPath;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +30,7 @@ import org.apache.tools.ant.Task;
 import org.unicode.cldr.api.CldrDataSupplier;
 import org.unicode.cldr.api.CldrDraftStatus;
 import org.unicode.cldr.api.CldrPath;
+import org.unicode.cldr.util.CLDRConfig;
 import org.unicode.icu.tool.cldrtoicu.AlternateLocaleData;
 import org.unicode.icu.tool.cldrtoicu.IcuConverterConfig;
 import org.unicode.icu.tool.cldrtoicu.LdmlConverter;
@@ -76,13 +78,25 @@ public final class ConvertIcuDataTask extends Task {
     private Predicate<String> idFilter = id -> true;
 
     @SuppressWarnings("unused")
-    public void setOutputDir(Path path) {
-        config.setOutputDir(path);
+    public void setOutputDir(String path) {
+        // Use String here since on some systems Ant doesn't support automatically converting Path instances.
+        config.setOutputDir(Paths.get(path));
     }
 
     @SuppressWarnings("unused")
-    public void setCldrDir(Path path) {
-        this.cldrPath = checkNotNull(path);
+    public void setCldrDir(String path) {
+        // Use String here since on some systems Ant doesn't support automatically converting Path instances.
+        this.cldrPath = checkNotNull(Paths.get(path));
+    }
+
+    @SuppressWarnings("unused")
+    public void setIcuVersion(String icuVersion) {
+        config.setIcuVersion(icuVersion);
+    }
+
+    @SuppressWarnings("unused")
+    public void setIcuDataVersion(String icuDataVersion) {
+        config.setIcuDataVersion(icuDataVersion);
     }
 
     @SuppressWarnings("unused")
@@ -108,8 +122,9 @@ public final class ConvertIcuDataTask extends Task {
     }
 
     @SuppressWarnings("unused")
-    public void setSpecialsDir(Path path) {
-        config.setSpecialsDir(path);
+    public void setSpecialsDir(String path) {
+        // Use String here since on some systems Ant doesn't support automatically converting Path instances.
+        config.setSpecialsDir(Paths.get(path));
     }
 
     @SuppressWarnings("unused")
@@ -291,6 +306,10 @@ public final class ConvertIcuDataTask extends Task {
 
     @SuppressWarnings("unused")
     public void execute() throws BuildException {
+        // Spin up CLDRConfig outside of other inner loops, to
+        // avoid static init problems seen in CLDR-14636
+        CLDRConfig.getInstance().getSupplementalDataInfo();
+
         checkBuild(localeIds != null, "<localeIds> must be specified");
 
         CldrDataSupplier src = CldrDataSupplier
@@ -357,7 +376,7 @@ public final class ConvertIcuDataTask extends Task {
 
     private static ImmutableSet<String> parseLocaleIds(String localeIds) {
         // Need to filter out '//' style end-of-line comments first (replace with \n to avoid
-        // inadvertantly joining two elements.
+        // inadvertently joining two elements.
         localeIds = localeIds.replaceAll("//[^\n]*\n", "\n");
         return ImmutableSet.copyOf(LIST_SPLITTER.splitToList(localeIds));
     }

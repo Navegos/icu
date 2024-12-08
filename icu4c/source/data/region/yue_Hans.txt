@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 yue_Hans{
     %%Parent{"root"}
     Countries{
@@ -298,6 +299,9 @@ yue_Hans{
         ZW{"辛巴威"}
         ZZ{"未知区域"}
     }
+    Countries%chagos{
+        IO{"查哥斯群岛"}
+    }
     Countries%short{
         HK{"香港"}
         MO{"澳门"}
@@ -310,5 +314,4 @@ yue_Hans{
         FK{"福克兰群岛 (马尔维纳斯群岛)"}
         SZ{"斯威士兰"}
     }
-    Version{"37"}
 }

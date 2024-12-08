@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 zh{
     Countries{
         001{"世界"}
@@ -297,6 +298,9 @@ zh{
         ZW{"津巴布韦"}
         ZZ{"未知地区"}
     }
+    Countries%chagos{
+        IO{"查戈斯群岛"}
+    }
     Countries%short{
         HK{"香港"}
         MO{"澳门"}
@@ -309,5 +313,4 @@ zh{
         CZ{"捷克共和国"}
         FK{"福克兰群岛（马尔维纳斯群岛）"}
     }
-    Version{"37"}
 }

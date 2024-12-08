@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 naq{
     Countries{
         AD{"Andorrab"}
@@ -92,7 +93,6 @@ naq{
         IE{"Irlandi"}
         IL{"Israeli"}
         IN{"Indiab"}
-        IO{"British Indian Ocean Territory"}
         IQ{"Iraqi"}
         IR{"Iranni"}
         IS{"Iceland"}
@@ -226,5 +226,4 @@ naq{
         ZM{"Zambiab"}
         ZW{"Zimbabweb"}
     }
-    Version{"37"}
 }

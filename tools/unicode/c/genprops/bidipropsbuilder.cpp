@@ -194,7 +194,7 @@ private:
 };
 
 BiDiPropsBuilder::BiDiPropsBuilder(UErrorCode &errorCode)
-        : pTrie(NULL),
+        : pTrie(nullptr),
           mirrorTop(0) {
     // This builder encodes the following properties.
     relevantProps.
@@ -298,7 +298,7 @@ BiDiPropsBuilder::setProps(const UniProps &props, const UnicodeSet &newValues,
     value|=(uint32_t)bpt<<UBIDI_BPT_SHIFT;
     value|=(uint32_t)props.getIntProp(UCHAR_JOINING_TYPE)<<UBIDI_JT_SHIFT;
     value|=(uint32_t)props.getIntProp(UCHAR_BIDI_CLASS);
-    utrie2_setRange32(pTrie, start, end, value, TRUE, &errorCode);
+    utrie2_setRange32(pTrie, start, end, value, true, &errorCode);
     if(U_FAILURE(errorCode)) {
         fprintf(stderr, "genprops error: BiDiPropsBuilder utrie2_setRange32() failed - %s\n",
                 u_errorName(errorCode));
@@ -308,7 +308,6 @@ BiDiPropsBuilder::setProps(const UniProps &props, const UnicodeSet &newValues,
     // Store Joining_Group values from vector column 1 in simple byte arrays.
     int32_t jg=props.getIntProp(UCHAR_JOINING_GROUP);
     for(UChar32 c=start; c<=end; ++c) {
-        int32_t jgStart;
         if(MIN_JG_START<=c && c<MAX_JG_LIMIT) {
             jgArray[c-MIN_JG_START]=(uint8_t)jg;
         } else if(MIN_JG_START2<=c && c<MAX_JG_LIMIT2) {
@@ -337,7 +336,7 @@ void
 BiDiPropsBuilder::makeMirror(UErrorCode &errorCode) {
     /* sort the mirroring table by source code points */
     uprv_sortArray(mirrors, mirrorTop, 8,
-                   compareMirror, NULL, FALSE, &errorCode);
+                   compareMirror, nullptr, false, &errorCode);
     if(U_FAILURE(errorCode)) { return; }
 
     /*
@@ -502,7 +501,7 @@ BiDiPropsBuilder::writeCSourceFile(const char *path, UErrorCode &errorCode) {
 
     FILE *f=usrc_create(path, "ubidi_props_data.h", 2016,
                         "icu/tools/unicode/c/genprops/bidipropsbuilder.cpp");
-    if(f==NULL) {
+    if(f==nullptr) {
         errorCode=U_FILE_ACCESS_ERROR;
         return;
     }
@@ -510,34 +509,39 @@ BiDiPropsBuilder::writeCSourceFile(const char *path, UErrorCode &errorCode) {
     usrc_writeArray(f,
         "static const UVersionInfo ubidi_props_dataVersion={",
         dataInfo.dataVersion, 8, 4,
+        "",
         "};\n\n");
     usrc_writeArray(f,
         "static const int32_t ubidi_props_indexes[UBIDI_IX_TOP]={",
         indexes, 32, UBIDI_IX_TOP,
+        "",
         "};\n\n");
     usrc_writeUTrie2Arrays(f,
-        "static const uint16_t ubidi_props_trieIndex[%ld]={\n", NULL,
+        "static const uint16_t ubidi_props_trieIndex[%ld]={\n", nullptr,
         pTrie,
         "\n};\n\n");
     usrc_writeArray(f,
         "static const uint32_t ubidi_props_mirrors[%ld]={\n",
         mirrors, 32, mirrorTop,
+        "",
         "\n};\n\n");
     UChar32 jgStart=indexes[UBIDI_IX_JG_START];
     UChar32 jgLimit=indexes[UBIDI_IX_JG_LIMIT];
     usrc_writeArray(f,
         "static const uint8_t ubidi_props_jgArray[%ld]={\n",
         jgArray+(jgStart-MIN_JG_START), 8, jgLimit-jgStart,
+        "",
         "\n};\n\n");
     UChar32 jgStart2=indexes[UBIDI_IX_JG_START2];
     UChar32 jgLimit2=indexes[UBIDI_IX_JG_LIMIT2];
     usrc_writeArray(f,
         "static const uint8_t ubidi_props_jgArray2[%ld]={\n",
         jgArray2+(jgStart2-MIN_JG_START2), 8, jgLimit2-jgStart2,
+        "",
         "\n};\n\n");
     fputs(
         "static const UBiDiProps ubidi_props_singleton={\n"
-        "  NULL,\n"
+        "  nullptr,\n"
         "  ubidi_props_indexes,\n"
         "  ubidi_props_mirrors,\n"
         "  ubidi_props_jgArray,\n"
@@ -545,9 +549,9 @@ BiDiPropsBuilder::writeCSourceFile(const char *path, UErrorCode &errorCode) {
         f);
     usrc_writeUTrie2Struct(f,
         "  {\n",
-        pTrie, "ubidi_props_trieIndex", NULL,
+        pTrie, "ubidi_props_trieIndex", nullptr,
         "  },\n");
-    usrc_writeArray(f, "  { ", dataInfo.formatVersion, 8, 4, " }\n");
+    usrc_writeArray(f, "  { ", dataInfo.formatVersion, 8, 4, "", " }\n");
     fputs("};\n\n"
           "#endif  // INCLUDED_FROM_UBIDI_PROPS_C\n", f);
     fclose(f);
@@ -558,7 +562,7 @@ BiDiPropsBuilder::writeBinaryData(const char *path, UBool withCopyright, UErrorC
     if(U_FAILURE(errorCode)) { return; }
 
     UNewDataMemory *pData=udata_create(path, UBIDI_DATA_TYPE, UBIDI_DATA_NAME, &dataInfo,
-                                       withCopyright ? U_COPYRIGHT_STRING : NULL, &errorCode);
+                                       withCopyright ? U_COPYRIGHT_STRING : nullptr, &errorCode);
     if(U_FAILURE(errorCode)) {
         fprintf(stderr, "genprops: udata_create(%s, ubidi.icu) failed - %s\n",
                 path, u_errorName(errorCode));
@@ -591,9 +595,9 @@ BiDiPropsBuilder::writeBinaryData(const char *path, UBool withCopyright, UErrorC
 
 PropsBuilder *
 createBiDiPropsBuilder(UErrorCode &errorCode) {
-    if(U_FAILURE(errorCode)) { return NULL; }
+    if(U_FAILURE(errorCode)) { return nullptr; }
     PropsBuilder *pb=new BiDiPropsBuilder(errorCode);
-    if(pb==NULL) {
+    if(pb==nullptr) {
         errorCode=U_MEMORY_ALLOCATION_ERROR;
     }
     return pb;

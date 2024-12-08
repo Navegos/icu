@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 zh_Hant{
     %%Parent{"root"}
     Countries{
@@ -298,6 +299,9 @@ zh_Hant{
         ZW{"辛巴威"}
         ZZ{"未知區域"}
     }
+    Countries%chagos{
+        IO{"查哥斯群島"}
+    }
     Countries%short{
         HK{"香港"}
         MO{"澳門"}
@@ -310,5 +314,4 @@ zh_Hant{
         FK{"福克蘭群島（馬爾維納斯群島）"}
         SZ{"史瓦濟蘭"}
     }
-    Version{"37"}
 }

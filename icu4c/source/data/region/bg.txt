@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 bg{
     Countries{
         001{"свят"}
@@ -262,7 +263,7 @@ bg{
         TH{"Тайланд"}
         TJ{"Таджикистан"}
         TK{"Токелау"}
-        TL{"Източен Тимор"}
+        TL{"Тимор Лесте"}
         TM{"Туркменистан"}
         TN{"Тунис"}
         TO{"Тонга"}
@@ -297,6 +298,9 @@ bg{
         ZW{"Зимбабве"}
         ZZ{"непознат регион"}
     }
+    Countries%chagos{
+        IO{"архипелаг Чагос"}
+    }
     Countries%short{
         HK{"Хонконг"}
         MO{"Макао"}
@@ -308,7 +312,8 @@ bg{
         CG{"Конго (Република)"}
         CZ{"Чешка република"}
         FK{"Фолкландски острови (Малвински острови)"}
+        NZ{"Аотеароа Нова Зеландия"}
         SZ{"Свазиленд"}
+        TL{"Източен Тимор"}
     }
-    Version{"37"}
 }

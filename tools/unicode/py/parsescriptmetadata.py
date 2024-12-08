@@ -1,4 +1,4 @@
-#!/usr/bin/python -B
+#!/usr/bin/python3 -B
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2017 and later: Unicode, Inc. and others.
@@ -23,8 +23,8 @@ import sys
 
 def main():
   if len(sys.argv) < 3:
-    print ("Usage: {}  path/to/ICU4C/uscript.h  "
-           "path/to/CLDR/scriptMetadata.txt".format(sys.argv[0]))
+    print("Usage: {}  path/to/ICU4C/uscript.h  "
+          "path/to/CLDR/scriptMetadata.txt".format(sys.argv[0]))
     return
   (uscript_path, smd_path) = sys.argv[1:3]
 
@@ -76,9 +76,9 @@ def main():
       if rtl == "YES": s += " | RTL"
       if lb == "YES": s += " | LB_LETTERS"
       if cased == "YES": s += " | CASED"
-      print "    " + s + ",  // " + iso_code
+      print("    " + s + ",  // " + iso_code)
     else:
-      print "    0,"
+      print("    0,")
 
 
 if __name__ == "__main__":

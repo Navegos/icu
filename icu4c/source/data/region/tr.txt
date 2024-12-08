@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 tr{
     Countries{
         001{"Dünya"}
@@ -86,7 +87,7 @@ tr{
         CP{"Clipperton Adası"}
         CR{"Kosta Rika"}
         CU{"Küba"}
-        CV{"Cape Verde"}
+        CV{"Cabo Verde"}
         CW{"Curaçao"}
         CX{"Christmas Adası"}
         CY{"Kıbrıs"}
@@ -297,6 +298,9 @@ tr{
         ZW{"Zimbabve"}
         ZZ{"Bilinmeyen Bölge"}
     }
+    Countries%chagos{
+        IO{"Chagos Takımadaları"}
+    }
     Countries%short{
         GB{"BK"}
         HK{"Hong Kong"}
@@ -311,8 +315,8 @@ tr{
         CI{"Fildişi Sahili"}
         CZ{"Çek Cumhuriyeti"}
         FK{"Falkland Adaları (Malvinas Adaları)"}
+        NZ{"Aotearoa Yeni Zelanda"}
         SZ{"Svaziland"}
         TL{"Doğu Timor"}
     }
-    Version{"37"}
 }

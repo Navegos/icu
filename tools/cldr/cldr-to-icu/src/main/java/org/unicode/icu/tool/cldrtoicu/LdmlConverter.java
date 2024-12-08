@@ -28,22 +28,19 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.unicode.cldr.api.CldrData;
 import org.unicode.cldr.api.CldrDataSupplier;
 import org.unicode.cldr.api.CldrDataType;
+import org.unicode.cldr.api.CldrPath;
+import org.unicode.cldr.api.PathMatcher;
 import org.unicode.icu.tool.cldrtoicu.LdmlConverterConfig.IcuLocaleDir;
+import org.unicode.icu.tool.cldrtoicu.LdmlConverterConfig.IcuVersionInfo;
+import org.unicode.icu.tool.cldrtoicu.localedistance.LocaleDistanceMapper;
 import org.unicode.icu.tool.cldrtoicu.mapper.Bcp47Mapper;
 import org.unicode.icu.tool.cldrtoicu.mapper.BreakIteratorMapper;
 import org.unicode.icu.tool.cldrtoicu.mapper.CollationMapper;
@@ -83,15 +80,13 @@ import com.google.common.io.CharStreams;
  */
 public final class LdmlConverter {
     // TODO: Do all supplemental data in one go and split similarly to locale data (using RbPath).
-    private static final PathMatcher GENDER_LIST_PATHS =
+    private static final Predicate<CldrPath> GENDER_LIST_PATHS =
         supplementalMatcher("gender");
-    private static final PathMatcher LIKELY_SUBTAGS_PATHS =
-        supplementalMatcher("likelySubtags");
-    private static final PathMatcher METAZONE_PATHS =
+    private static final Predicate<CldrPath> METAZONE_PATHS =
         supplementalMatcher("metaZones", "primaryZones");
-    private static final PathMatcher METADATA_PATHS =
+    private static final Predicate<CldrPath> METADATA_PATHS =
         supplementalMatcher("metadata");
-    private static final PathMatcher SUPPLEMENTAL_DATA_PATHS =
+    private static final Predicate<CldrPath> SUPPLEMENTAL_DATA_PATHS =
         supplementalMatcher(
             "calendarData",
             "calendarPreferenceData",
@@ -102,29 +97,39 @@ public final class LdmlConverter {
             "languageMatching",
             "measurementData",
             "parentLocales",
+            "personNamesDefaults",
             "subdivisionContainment",
             "territoryContainment",
             "territoryInfo",
             "timeData",
-            "unitPreferenceData",
             "weekData",
             "weekOfPreference");
-    private static final PathMatcher CURRENCY_DATA_PATHS =
+    private static final Predicate<CldrPath> CURRENCY_DATA_PATHS =
         supplementalMatcher("currencyData");
-    private static final PathMatcher NUMBERING_SYSTEMS_PATHS =
+    private static final Predicate<CldrPath> UNITS_DATA_PATHS =
+        supplementalMatcher(
+            "convertUnits",
+            "unitConstants",
+            "unitQuantities",
+            "unitPreferenceData",
+            "unitPrefixes");
+    private static final Predicate<CldrPath> GRAMMATICAL_FEATURES_PATHS =
+        supplementalMatcher("grammaticalData");
+    private static final Predicate<CldrPath> NUMBERING_SYSTEMS_PATHS =
         supplementalMatcher("numberingSystems");
-    private static final PathMatcher WINDOWS_ZONES_PATHS =
+    private static final Predicate<CldrPath> WINDOWS_ZONES_PATHS =
         supplementalMatcher("windowsZones");
 
-    private static PathMatcher supplementalMatcher(String... spec) {
+    private static Predicate<CldrPath> supplementalMatcher(String... spec) {
         checkArgument(spec.length > 0, "must supply at least one matcher spec");
         if (spec.length == 1) {
-            return PathMatcher.of("supplementalData/" + spec[0]);
+            return PathMatcher.of("//supplementalData/" + spec[0])::matchesPrefixOf;
         }
-        return PathMatcher.anyOf(
+        return
             Arrays.stream(spec)
-                .map(s -> PathMatcher.of("supplementalData/" + s))
-                .toArray(PathMatcher[]::new));
+                .map(s -> PathMatcher.of("//supplementalData/" + s))
+                .map(m -> ((Predicate<CldrPath>) m::matchesPrefixOf))
+                .reduce(p -> false, Predicate::or);
     }
 
     private static RbPath RB_PARENT = RbPath.of("%%Parent");
@@ -147,9 +152,10 @@ public final class LdmlConverter {
         RBNF(LDML),
         DAY_PERIODS(SUPPLEMENTAL),
         GENDER_LIST(SUPPLEMENTAL),
-        LIKELY_SUBTAGS(SUPPLEMENTAL),
         SUPPLEMENTAL_DATA(SUPPLEMENTAL),
+        UNITS(SUPPLEMENTAL),
         CURRENCY_DATA(SUPPLEMENTAL),
+        GRAMMATICAL_FEATURES(SUPPLEMENTAL),
         METADATA(SUPPLEMENTAL),
         META_ZONES(SUPPLEMENTAL),
         NUMBERING_SYSTEMS(SUPPLEMENTAL),
@@ -157,6 +163,8 @@ public final class LdmlConverter {
         PLURAL_RANGES(SUPPLEMENTAL),
         WINDOWS_ZONES(SUPPLEMENTAL),
         TRANSFORMS(SUPPLEMENTAL),
+        LOCALE_DISTANCE(SUPPLEMENTAL),
+        VERSION(SUPPLEMENTAL),
         KEY_TYPE_DATA(BCP47);
 
         public static final ImmutableSet<OutputType> ALL = ImmutableSet.copyOf(OutputType.values());
@@ -238,7 +246,7 @@ public final class LdmlConverter {
 
     private static ImmutableList<String> readLinesFromResource(String name) {
         try (InputStream in = LdmlConverter.class.getResourceAsStream(name)) {
-            return ImmutableList.copyOf(CharStreams.readLines(new InputStreamReader(in)));
+            return ImmutableList.copyOf(CharStreams.readLines(new InputStreamReader(in, UTF_8)));
         } catch (IOException e) {
             throw new RuntimeException("cannot read resource: " + name, e);
         }
@@ -271,7 +279,7 @@ public final class LdmlConverter {
             return;
         }
 
-        String cldrVersion = config.getCldrVersion();
+        String cldrVersion = config.getVersionInfo().getCldrVersion();
 
         Map<IcuLocaleDir, DependencyGraph> graphMetadata = new HashMap<>();
         splitDirs.forEach(d -> graphMetadata.put(d, new DependencyGraph(cldrVersion)));
@@ -279,14 +287,22 @@ public final class LdmlConverter {
         SetMultimap<IcuLocaleDir, String> writtenLocaleIds = HashMultimap.create();
         Path baseDir = config.getOutputDir();
 
+        System.out.println("processing standard ldml files");
         for (String id : config.getAllLocaleIds()) {
             // Skip "target" IDs that are aliases (they are handled later).
             if (!availableIds.contains(id)) {
                 continue;
             }
             // TODO: Remove the following skip when ICU-20997 is fixed
-            if (id.contains("VALENCIA")) {
+            if (id.contains("VALENCIA") || id.contains("TARASK")) {
                 System.out.println("(skipping " + id + " until ICU-20997 is fixed)");
+                continue;
+            }
+            // Now that former CLDR see locales are in common, there are some language
+            // variants that are not at a high enough coverage level to pick up.
+            // TODO need a better way of handling this.
+             if (id.contains("POLYTON")) {
+                System.out.println("(skipping " + id + ", insufficient coverage level)");
                 continue;
             }
 
@@ -342,13 +358,16 @@ public final class LdmlConverter {
                 });
 
                 if (!splitData.getPaths().isEmpty() || isBaseLanguage || dir.includeEmpty()) {
-                    splitData.setVersion(cldrVersion);
+                    if (id.equals("root")) {
+                        splitData.setVersion(cldrVersion);
+                    }
                     write(splitData, outDir, false);
                     writtenLocaleIds.put(dir, id);
                 }
             }
         }
 
+        System.out.println("processing alias ldml files");
         for (IcuLocaleDir dir : splitDirs) {
             Path outDir = baseDir.resolve(dir.getOutputDir());
             Set<String> targetIds = config.getTargetLocaleIds(dir);
@@ -451,6 +470,7 @@ public final class LdmlConverter {
             if (type.getCldrType() == LDML) {
                 continue;
             }
+            System.out.println("processing supplemental type " + type);
             switch (type) {
             case DAY_PERIODS:
                 write(DayPeriodsMapper.process(src), "misc");
@@ -460,16 +480,20 @@ public final class LdmlConverter {
                 processSupplemental("genderList", GENDER_LIST_PATHS, "misc", false);
                 break;
 
-            case LIKELY_SUBTAGS:
-                processSupplemental("likelySubtags", LIKELY_SUBTAGS_PATHS, "misc", false);
-                break;
-
             case SUPPLEMENTAL_DATA:
                 processSupplemental("supplementalData", SUPPLEMENTAL_DATA_PATHS, "misc", true);
                 break;
 
+            case UNITS:
+                processSupplemental("units", UNITS_DATA_PATHS, "misc", true);
+                break;
+
             case CURRENCY_DATA:
                 processSupplemental("supplementalData", CURRENCY_DATA_PATHS, "curr", false);
+                break;
+
+            case GRAMMATICAL_FEATURES:
+                processSupplemental("grammaticalFeatures", GRAMMATICAL_FEATURES_PATHS, "misc", false);
                 break;
 
             case METADATA:
@@ -492,6 +516,10 @@ public final class LdmlConverter {
                 write(PluralRangesMapper.process(src), "misc");
                 break;
 
+            case LOCALE_DISTANCE:
+                write(LocaleDistanceMapper.process(src), "misc");
+                break;
+
             case WINDOWS_ZONES:
                 processSupplemental("windowsZones", WINDOWS_ZONES_PATHS, "misc", false);
                 break;
@@ -499,6 +527,10 @@ public final class LdmlConverter {
             case TRANSFORMS:
                 Path transformDir = createDirectory(config.getOutputDir().resolve("translit"));
                 write(TransformsMapper.process(src, transformDir, fileHeader), transformDir, false);
+                break;
+
+            case VERSION:
+                writeIcuVersionInfo();
                 break;
 
             case KEY_TYPE_DATA:
@@ -514,14 +546,14 @@ public final class LdmlConverter {
     private static final RbPath RB_CLDR_VERSION = RbPath.of("cldrVersion");
 
     private void processSupplemental(
-        String label, PathMatcher paths, String dir, boolean addCldrVersion) {
+        String label, Predicate<CldrPath> paths, String dir, boolean addCldrVersion) {
         IcuData icuData =
             SupplementalMapper.process(src, supplementalTransformer, label, paths);
         // A hack for "supplementalData.txt" since the "cldrVersion" value doesn't come from the
         // supplemental data XML files.
         if (addCldrVersion) {
             // Not the same path as used by "setVersion()"
-            icuData.add(RB_CLDR_VERSION, config.getCldrVersion());
+            icuData.add(RB_CLDR_VERSION, config.getVersionInfo().getCldrVersion());
         }
         write(icuData, dir);
     }
@@ -543,11 +575,34 @@ public final class LdmlConverter {
         } else {
             // These empty files only exist because the target of an alias has a parent locale
             // which is itself not in the set of written ICU files. An "indirect alias target".
-            icuData.setVersion(config.getCldrVersion());
+            // No need to add data: Just write a resource bundle with an empty top-level table.
         }
         write(icuData, dir, false);
     }
 
+    private void writeIcuVersionInfo() {
+        IcuVersionInfo versionInfo = config.getVersionInfo();
+        IcuData versionData = new IcuData("icuver", false);
+        versionData.add(RbPath.of("ICUVersion"), versionInfo.getIcuVersion());
+        versionData.add(RbPath.of("DataVersion"), versionInfo.getIcuDataVersion());
+        versionData.add(RbPath.of("CLDRVersion"), versionInfo.getCldrVersion());
+        // Write file via non-helper methods since we need to include a legacy copyright.
+        Path miscDir = config.getOutputDir().resolve("misc");
+        createDirectory(miscDir);
+        ImmutableList<String> versionHeader = ImmutableList.<String>builder()
+            .addAll(fileHeader)
+            .add(
+                "***************************************************************************",
+                "*",
+                "* Copyright (C) 2010-2016 International Business Machines",
+                "* Corporation and others.  All Rights Reserved.",
+                "*",
+                "***************************************************************************")
+            .build();
+        IcuTextWriter.writeToFile(versionData, miscDir, versionHeader, false);
+    }
+
+    // Commonest case for writing data files in "normal" directories.
     private void write(IcuData icuData, String dir) {
         write(icuData, config.getOutputDir().resolve(dir), false);
     }
@@ -567,6 +622,7 @@ public final class LdmlConverter {
     }
 
     private void writeDependencyGraph(Path dir, DependencyGraph depGraph) {
+        createDirectory(dir);
         try (BufferedWriter w = Files.newBufferedWriter(dir.resolve("LOCALE_DEPS.json"), UTF_8);
             PrintWriter out = new PrintWriter(w)) {
             depGraph.writeJsonTo(out, fileHeader);
@@ -608,6 +664,8 @@ public final class LdmlConverter {
             .put("boundaries", BRKITR)
             .put("dictionaries", BRKITR)
             .put("exceptions", BRKITR)
+            .put("extensions", BRKITR)
+            .put("lstm", BRKITR)
             // COLL
             .put("collations", COLL)
             .put("depends", COLL)

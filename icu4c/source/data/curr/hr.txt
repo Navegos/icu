@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 hr{
     Currencies{
         ADP{
@@ -194,10 +195,6 @@ hr{
             "BRR",
             "brazilski cruzeiro",
         }
-        BRZ{
-            "BRZ",
-            "BRZ",
-        }
         BSD{
             "BSD",
             "bahamski dolar",
@@ -375,7 +372,7 @@ hr{
             "etiopski bir",
         }
         EUR{
-            "EUR",
+            "€",
             "euro",
         }
         FIM{
@@ -467,7 +464,7 @@ hr{
             "hrvatski dinar",
         }
         HRK{
-            "HRK",
+            "kn",
             "hrvatska kuna",
         }
         HTG{
@@ -596,7 +593,7 @@ hr{
         }
         LSL{
             "LSL",
-            "lesoto loti",
+            "lesotski loti",
         }
         LTL{
             "LTL",
@@ -637,10 +634,6 @@ hr{
         MAF{
             "MAF",
             "marokanski franak",
-        }
-        MCF{
-            "MCF",
-            "MCF",
         }
         MDC{
             "MDC",
@@ -688,7 +681,7 @@ hr{
         }
         MRU{
             "MRU",
-            "mauritanijska ouguja",
+            "mauretanska ouguja",
         }
         MTL{
             "MTL",
@@ -898,9 +891,13 @@ hr{
             "SKK",
             "slovačka kruna",
         }
+        SLE{
+            "SLE",
+            "sijeraleonski leone",
+        }
         SLL{
             "SLL",
-            "sijeraleonski leone",
+            "sijeraleonski leone (1964—2022)",
         }
         SOS{
             "SOS",
@@ -1115,7 +1112,7 @@ hr{
             "francuski UIC-franak",
         }
         XOF{
-            "CFA",
+            "F CFA",
             "CFA franak BCEAO",
         }
         XPD{
@@ -1212,106 +1209,9 @@ hr{
         }
     }
     Currencies%narrow{
-        AOA{"Kz"}
-        ARS{"$"}
-        AUD{"$"}
-        BAM{"KM"}
-        BBD{"$"}
-        BDT{"৳"}
-        BMD{"$"}
-        BND{"$"}
-        BOB{"Bs"}
-        BRL{"R$"}
-        BSD{"$"}
-        BWP{"P"}
         BYN{"р."}
-        BZD{"$"}
-        CAD{"$"}
-        CLP{"$"}
-        CNY{"¥"}
-        COP{"$"}
-        CRC{"₡"}
-        CUC{"$"}
-        CUP{"$"}
-        CZK{"Kč"}
-        DKK{"kr"}
-        DOP{"$"}
-        EGP{"E£"}
-        ESP{"₧"}
-        EUR{"€"}
-        FJD{"$"}
-        FKP{"£"}
-        GBP{"£"}
-        GEL{"₾"}
-        GIP{"£"}
-        GNF{"FG"}
-        GTQ{"Q"}
-        GYD{"$"}
-        HKD{"$"}
-        HNL{"L"}
-        HRK{"kn"}
-        HUF{"Ft"}
-        IDR{"Rp"}
-        ILS{"₪"}
-        INR{"₹"}
-        ISK{"kr"}
-        JMD{"$"}
-        JPY{"¥"}
-        KHR{"៛"}
-        KMF{"CF"}
-        KPW{"₩"}
-        KRW{"₩"}
-        KYD{"$"}
-        KZT{"₸"}
-        LAK{"₭"}
-        LBP{"L£"}
-        LKR{"Rs"}
-        LRD{"$"}
-        MGA{"Ar"}
-        MMK{"K"}
-        MNT{"₮"}
-        MUR{"Rs"}
-        MXN{"$"}
-        MYR{"RM"}
-        NAD{"$"}
-        NGN{"₦"}
-        NIO{"C$"}
-        NOK{"kr"}
-        NPR{"Rs"}
-        NZD{"$"}
-        PHP{"₱"}
-        PKR{"Rs"}
-        PLN{"zł"}
-        PYG{"₲"}
-        RON{"lei"}
-        RUB{"₽"}
         RUR{"р."}
-        RWF{"RF"}
-        SBD{"$"}
-        SEK{"kr"}
-        SGD{"$"}
-        SHP{"£"}
-        SRD{"$"}
-        SSP{"£"}
-        STN{"Db"}
-        SYP{"£"}
-        THB{"฿"}
-        TOP{"T$"}
-        TRY{"₺"}
-        TTD{"$"}
         TWD{"NT$"}
-        UAH{"₴"}
-        USD{"$"}
-        UYU{"$"}
-        VEF{"Bs"}
-        VND{"₫"}
-        XCD{"$"}
-        ZAR{"R"}
-        ZMW{"ZK"}
-    }
-    Currencies%variant{
-        GEL{"₾"}
-        TRY{"TL"}
     }
     CurrencyPlurals{
         ADP{
@@ -2050,9 +1950,9 @@ hr{
             other{"liberijskih dolara"}
         }
         LSL{
-            few{"lesoto lotija"}
-            one{"lesoto loti"}
-            other{"lesoto lotija"}
+            few{"lesotska lotija"}
+            one{"lesotski loti"}
+            other{"lesotskih lotija"}
         }
         LTL{
             few{"litavska litasa"}
@@ -2160,9 +2060,9 @@ hr{
             other{"mauritanijskih ouguja (1973. – 2017.)"}
         }
         MRU{
-            few{"mauritanijske ouguje"}
-            one{"mauritanijska ouguja"}
-            other{"mauritanijskih ouguja"}
+            few{"mauretanske ouguje"}
+            one{"mauretanska ouguja"}
+            other{"mauretanskih ouguja"}
         }
         MTL{
             few{"malteške lire"}
@@ -2235,8 +2135,8 @@ hr{
             other{"namibijskih dolara"}
         }
         NGN{
-            few{"nigerijska naira"}
-            one{"nigerijski nair"}
+            few{"nigerijske naire"}
+            one{"nigerijska naira"}
             other{"nigerijskih naira"}
         }
         NIC{
@@ -2424,10 +2324,15 @@ hr{
             one{"slovačka kruna"}
             other{"slovačkih kruna"}
         }
-        SLL{
-            few{"sijeraleonske leone"}
+        SLE{
+            few{"sijarelonska leona"}
             one{"sijeraleonski leon"}
             other{"sijeraleonskih leona"}
+        }
+        SLL{
+            few{"sijeraleonskih leona (1964—2022)"}
+            one{"sijeraleonski leone (1964—2022)"}
+            other{"sijeraleonskih leona (1964—2022)"}
         }
         SOS{
             few{"somalijska šilinga"}
@@ -2735,9 +2640,9 @@ hr{
             other{"obračunskih jedinica ADB"}
         }
         XXX{
-            few{"nepoznata valuta"}
-            one{"nepoznata valuta"}
-            other{"nepoznata valuta"}
+            few{"(nepoznata valuta)"}
+            one{"(nepoznata valuta)"}
+            other{"(nepoznata valuta)"}
         }
         YDD{
             few{"jemenska dinara"}
@@ -2815,10 +2720,4 @@ hr{
             other{"zimbabveanskih dolara (2008)"}
         }
     }
-    CurrencyUnitPatterns{
-        few{"{0} {1}"}
-        one{"{0} {1}"}
-        other{"{0} {1}"}
-    }
-    Version{"37"}
 }

@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 pl{
     Currencies{
         ADP{
@@ -88,7 +89,7 @@ pl{
         }
         BBD{
             "BBD",
-            "dolar Barbadosu",
+            "dolar barbadoski",
         }
         BDT{
             "BDT",
@@ -528,7 +529,7 @@ pl{
         }
         LSL{
             "LSL",
-            "loti Lesoto",
+            "loti sotyjskie",
         }
         LTL{
             "LTL",
@@ -802,9 +803,13 @@ pl{
             "SKK",
             "korona słowacka",
         }
+        SLE{
+            "SLE",
+            "leone sierraleoński",
+        }
         SLL{
             "SLL",
-            "leone sierraleoński",
+            "leone sierraleoński (1964—2022)",
         }
         SOS{
             "SOS",
@@ -888,7 +893,7 @@ pl{
         }
         TTD{
             "TTD",
-            "dolar Trynidadu i Tobago",
+            "dolar trynidadzki",
         }
         TWD{
             "TWD",
@@ -995,7 +1000,7 @@ pl{
             "UIC-frank francuski",
         }
         XOF{
-            "CFA",
+            "F CFA",
             "frank CFA",
         }
         XPD{
@@ -1075,9 +1080,6 @@ pl{
         RON{"lej"}
         TWD{"NT$"}
     }
-    Currencies%variant{
-        GEL{"₾"}
-    }
     CurrencyPlurals{
         ADP{
             few{"pesety andorskie"}
@@ -1090,12 +1092,6 @@ pl{
             many{"dirhamów ZEA"}
             one{"dirham ZEA"}
             other{"dirhama ZEA"}
-        }
-        AFA{
-            few{"afgani (1927–2002)"}
-            many{"afgani (1927–2002)"}
-            one{"afgani (1927–2002)"}
-            other{"afgani (1927–2002)"}
         }
         AFN{
             few{"afgani afgańskie"}
@@ -1112,8 +1108,8 @@ pl{
         AMD{
             few{"dramy armeńskie"}
             many{"dramów armeńskich"}
-            one{"dram ormiański"}
-            other{"dramy ormiańskiej"}
+            one{"dram armeński"}
+            other{"drama armeńskiego"}
         }
         ANG{
             few{"guldeny antylskie"}
@@ -1163,12 +1159,6 @@ pl{
             one{"florin arubański"}
             other{"florina arubańskiego"}
         }
-        AZM{
-            few{"manat azerbejdżański"}
-            many{"manat azerbejdżański"}
-            one{"manat azerbejdżański"}
-            other{"manat azerbejdżański"}
-        }
         AZN{
             few{"manaty azerskie"}
             many{"manatów azerskich"}
@@ -1182,10 +1172,10 @@ pl{
             other{"marki zamiennej Bośni i Hercegowiny"}
         }
         BBD{
-            few{"dolary Barbadosu"}
-            many{"dolarów Barbadosu"}
-            one{"dolar Barbadosu"}
-            other{"dolara Barbadosu"}
+            few{"dolary barbadoskie"}
+            many{"dolarów barbadoskich"}
+            one{"dolar barbadoski"}
+            other{"dolara barbadoskiego"}
         }
         BDT{
             few{"taka bengalskie"}
@@ -1433,12 +1423,6 @@ pl{
             one{"birr etiopski"}
             other{"birra etiopskiego"}
         }
-        EUR{
-            few{"euro"}
-            many{"euro"}
-            one{"euro"}
-            other{"euro"}
-        }
         FJD{
             few{"dolary fidżyjskie"}
             many{"dolarów fidżyjskich"}
@@ -1667,6 +1651,12 @@ pl{
             one{"dolar liberyjski"}
             other{"dolara liberyjskiego"}
         }
+        LSL{
+            few{"loti sotyjskie"}
+            many{"loti sotyjskich"}
+            one{"loti sotyjskie"}
+            other{"loti sotyjskiego"}
+        }
         LTL{
             few{"lity litewskie"}
             many{"litów litewskich"}
@@ -1727,12 +1717,6 @@ pl{
             one{"tugrik mongolski"}
             other{"tugrika mongolskiego"}
         }
-        MOP{
-            few{"pataca Makau"}
-            many{"pataca Makau"}
-            one{"pataca Makau"}
-            other{"pataca Makau"}
-        }
         MRO{
             few{"ouguiya mauretańskie (1973–2017)"}
             many{"ouguiya mauretańskich (1973–2017)"}
@@ -1758,10 +1742,10 @@ pl{
             other{"rupii malediwskiej"}
         }
         MWK{
-            few{"kwacha malawijskie"}
-            many{"kwacha malawijskich"}
+            few{"kwachy malawijskie"}
+            many{"kwach malawijskich"}
             one{"kwacha malawijska"}
-            other{"kwacha malawijskiej"}
+            other{"kwachy malawijskiej"}
         }
         MXN{
             few{"pesos meksykańskie"}
@@ -1985,11 +1969,17 @@ pl{
             one{"korona słowacka"}
             other{"korona słowacka"}
         }
-        SLL{
+        SLE{
             few{"leone sierraleońskie"}
             many{"leone sierraleońskich"}
             one{"leone sierraleoński"}
             other{"leone sierraleońskiego"}
+        }
+        SLL{
+            few{"leone sierraleońskie (1964—2022)"}
+            many{"leone sierraleońskich (1964—2022)"}
+            one{"leone sierraleoński (1964—2022)"}
+            other{"leone sierraleońskiego (1964—2022)"}
         }
         SOS{
             few{"szylingi somalijskie"}
@@ -2088,10 +2078,10 @@ pl{
             other{"liry tureckiej"}
         }
         TTD{
-            few{"dolary Trynidadu i Tobago"}
-            many{"dolarów Trynidadu i Tobago"}
-            one{"dolar Trynidadu i Tobago"}
-            other{"dolara Trynidadu i Tobago"}
+            few{"dolary trynidadzkie"}
+            many{"dolarów trynidadzkich"}
+            one{"dolar trynidadzki"}
+            other{"dolara trynidadzkiego"}
         }
         TWD{
             few{"nowe dolary tajwańskie"}
@@ -2232,11 +2222,4 @@ pl{
             other{"kwachy zambijskiej"}
         }
     }
-    CurrencyUnitPatterns{
-        few{"{0} {1}"}
-        many{"{0} {1}"}
-        one{"{0} {1}"}
-        other{"{0} {1}"}
-    }
-    Version{"37"}
 }

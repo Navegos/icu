@@ -26,6 +26,7 @@ import java.util.stream.Stream;
 import org.unicode.cldr.api.AttributeKey;
 import org.unicode.cldr.api.CldrDataSupplier;
 import org.unicode.cldr.api.CldrDataType;
+import org.unicode.cldr.api.PathMatcher;
 
 import com.google.common.base.Ascii;
 import com.google.common.base.Splitter;
@@ -57,22 +58,23 @@ public final class SupplementalData {
     private static final Pattern SCRIPT_SUBTAG = Pattern.compile("[A-Z][a-z]{3}");
 
     private static final PathMatcher ALIAS =
-        PathMatcher.of("supplementalData/metadata/alias/*[@type=*]");
+        PathMatcher.of("//supplementalData/metadata/alias/*[@type=*]");
 
     private static final PathMatcher PARENT_LOCALE =
-        PathMatcher.of("supplementalData/parentLocales/parentLocale[@parent=*]");
+        PathMatcher.of("//supplementalData/parentLocales/parentLocale[@parent=*]");
+    private static final AttributeKey COMPONENT = keyOf("parentLocales", "component");
     private static final AttributeKey PARENT = keyOf("parentLocale", "parent");
     private static final AttributeKey LOCALES = keyOf("parentLocale", "locales");
 
     private static final PathMatcher CALENDER_PREFERENCE =
-        PathMatcher.of("supplementalData/calendarPreferenceData/calendarPreference[@territories=*]");
+        PathMatcher.of("//supplementalData/calendarPreferenceData/calendarPreference[@territories=*]");
     private static final AttributeKey CALENDER_TERRITORIES =
         keyOf("calendarPreference", "territories");
     private static final AttributeKey CALENDER_ORDERING =
         keyOf("calendarPreference", "ordering");
 
     private static final PathMatcher LIKELY_SUBTAGS =
-        PathMatcher.of("supplementalData/likelySubtags/likelySubtag[@from=*]");
+        PathMatcher.of("//supplementalData/likelySubtags/likelySubtag[@from=*]");
     private static final AttributeKey SUBTAG_FROM = keyOf("likelySubtag", "from");
     private static final AttributeKey SUBTAG_TO = keyOf("likelySubtag", "to");
 
@@ -122,7 +124,9 @@ public final class SupplementalData {
                             alias,
                             alias.typeKey.valueFrom(v),
                             alias.replacementKey.valueFrom(v)));
-                } else if (PARENT_LOCALE.matches(v.getPath())) {
+                } else if (PARENT_LOCALE.matches(v.getPath()) && !COMPONENT.optionalValueFrom(v).isPresent()) {
+                    // CLDR-16253 added component-specific parents, which we ignore for now.
+                    // TODO(ICU-22289): Handle these properly.
                     String p = PARENT.valueFrom(v);
                     LOCALES.listOfValuesFrom(v).forEach(c -> parentLocaleMap.put(c, p));
                 } else if (CALENDER_PREFERENCE.matches(v.getPath())) {
@@ -469,6 +473,11 @@ public final class SupplementalData {
      */
     public String getParent(String localeId) {
         checkState(!localeId.equals("root"), "cannot ask for parent of 'root' locale");
+        // We probably want to fully canonicalize here. But in the absence of that we
+        // at least need to do the following canonicalization:
+        if (localeId.equals("no_NO_NY")) {
+            localeId = "nn_NO";
+        }
         // Always defer to an explicit parent locale set in the CLDR data.
         Optional<String> explicitParent = getExplicitParentLocaleOf(localeId);
         if (explicitParent.isPresent()) {
@@ -526,7 +535,8 @@ public final class SupplementalData {
     // ...
     // Remove the script code 'Zzzz' and the region code 'ZZ' if they occur.
     //
-    // Note that this implementation does not need to handle "grandfathered" tags.
+    // Note that this implementation does not need to handle
+    // legacy language tags (marked as “Type: grandfathered” in BCP 47).
     private Optional<LocaleId> addLikelySubtags(String localeId) {
         if (localeId.equals("root")) {
             return Optional.empty();

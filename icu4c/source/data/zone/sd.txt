@@ -1,7 +1,7 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 sd{
-    Version{"37"}
     zoneStrings{
         "Africa:Abidjan"{
             ec{"ابي جان"}
@@ -258,6 +258,9 @@ sd{
         "America:Chihuahua"{
             ec{"چي هوا هوا"}
         }
+        "America:Ciudad_Juarez"{
+            ec{"سوڊيڊ جوريز"}
+        }
         "America:Coral_Harbour"{
             ec{"اٽيڪوڪن"}
         }
@@ -462,9 +465,6 @@ sd{
         "America:New_York"{
             ec{"نيويارڪ"}
         }
-        "America:Nipigon"{
-            ec{"نپيگان"}
-        }
         "America:Nome"{
             ec{"نوم"}
         }
@@ -486,9 +486,6 @@ sd{
         "America:Panama"{
             ec{"پناما"}
         }
-        "America:Pangnirtung"{
-            ec{"پینگنرٽنگ"}
-        }
         "America:Paramaribo"{
             ec{"پيراميريبو"}
         }
@@ -509,9 +506,6 @@ sd{
         }
         "America:Punta_Arenas"{
             ec{"پنٽا اريناس"}
-        }
-        "America:Rainy_River"{
-            ec{"ريني رور"}
         }
         "America:Rankin_Inlet"{
             ec{"رينڪن انليٽ"}
@@ -573,9 +567,6 @@ sd{
         "America:Thule"{
             ec{"ٿولي"}
         }
-        "America:Thunder_Bay"{
-            ec{"ٿنڊر بي"}
-        }
         "America:Tijuana"{
             ec{"تيجوانا"}
         }
@@ -596,9 +587,6 @@ sd{
         }
         "America:Yakutat"{
             ec{"ياڪوتات"}
-        }
-        "America:Yellowknife"{
-            ec{"ييلو نائيف"}
         }
         "Antarctica:Casey"{
             ec{"ڪيسي"}
@@ -690,9 +678,6 @@ sd{
         "Asia:Chita"{
             ec{"چيتا"}
         }
-        "Asia:Choibalsan"{
-            ec{"چوئي بيلسن"}
-        }
         "Asia:Colombo"{
             ec{"ڪولمبو"}
         }
@@ -757,7 +742,7 @@ sd{
             ec{"ڪريسنويارسڪ"}
         }
         "Asia:Kuala_Lumpur"{
-            ec{"ڪوللمپور"}
+            ec{"ڪوالالمپور"}
         }
         "Asia:Kuching"{
             ec{"کوچنگ"}
@@ -916,16 +901,13 @@ sd{
             ec{"اسٽينلي"}
         }
         "Australia:Adelaide"{
-            ec{"ايڊيلينڊ"}
+            ec{"ايڊيليڊ"}
         }
         "Australia:Brisbane"{
             ec{"برسبين"}
         }
         "Australia:Broken_Hill"{
             ec{"بروڪن هل"}
-        }
-        "Australia:Currie"{
-            ec{"ڪري"}
         }
         "Australia:Darwin"{
             ec{"ڊارون"}
@@ -1023,7 +1005,7 @@ sd{
             ec{"ڪلينن گراڊ"}
         }
         "Europe:Kiev"{
-            ec{"ڪيف"}
+            ec{"ڪِيو"}
         }
         "Europe:Kirov"{
             ec{"ڪيروف"}
@@ -1105,13 +1087,10 @@ sd{
             ec{"ٽالن"}
         }
         "Europe:Tirane"{
-            ec{"اراني"}
+            ec{"تراني"}
         }
         "Europe:Ulyanovsk"{
             ec{"اليانوسڪ"}
-        }
-        "Europe:Uzhgorod"{
-            ec{"ازهارڊ"}
         }
         "Europe:Vaduz"{
             ec{"وڊوز"}
@@ -1133,9 +1112,6 @@ sd{
         }
         "Europe:Zagreb"{
             ec{"زغرب"}
-        }
-        "Europe:Zaporozhye"{
-            ec{"زيپروزهايا"}
         }
         "Europe:Zurich"{
             ec{"زيورخ"}
@@ -1218,8 +1194,8 @@ sd{
         "Pacific:Honolulu"{
             ec{"هونو لولو"}
         }
-        "Pacific:Johnston"{
-            ec{"جانسٹن"}
+        "Pacific:Kanton"{
+            ec{"ڪانٽن"}
         }
         "Pacific:Kiritimati"{
             ec{"ڪريٽمٽي"}
@@ -1349,13 +1325,13 @@ sd{
         }
         "meta:Argentina"{
             ld{"ارجنٽائن جي اونهاري جو وقت"}
-            lg{"ارجنٽائن وقت"}
+            lg{"ارجنٽينا جو وقت"}
             ls{"ارجنٽائن معياري وقت"}
         }
         "meta:Argentina_Western"{
-            ld{"مغربي ارجنٽائن جي اونهاري جو وقت"}
-            lg{"مغربي ارجنٽائن وقت"}
-            ls{"مغربي ارجنٽائن جو معياري وقت"}
+            ld{"اولهه ارجنٽينا جي اونهاري جو وقت"}
+            lg{"اولهه ارجنٽينا جو وقت"}
+            ls{"اولهه ارجنٽينا جو معياري وقت"}
         }
         "meta:Armenia"{
             ld{"آرمينيا جي اونهاري جو وقت"}
@@ -1414,7 +1390,7 @@ sd{
             ls{"براسيليا جو معياري وقت"}
         }
         "meta:Brunei"{
-            ls{"برونائي داروالسلام جو وقت"}
+            ls{"برونائي دارالسلام جو وقت"}
         }
         "meta:Cape_Verde"{
             ld{"ڪيپ ورڊ جي اونهاري جو وقت"}
@@ -1436,13 +1412,8 @@ sd{
         }
         "meta:China"{
             ld{"چائنا جي ڏينهن جو وقت"}
-            lg{"چائنا جو وقت"}
+            lg{"چين جو وقت"}
             ls{"چائنا جو معياري وقت"}
-        }
-        "meta:Choibalsan"{
-            ld{"چوئي بيلسن جي اونهاري جو وقت"}
-            lg{"چوئي بيلسن جو وقت"}
-            ls{"چوئي بيلسن جو معياري وقت"}
         }
         "meta:Christmas"{
             ls{"ڪرسمس آئي لينڊ جو وقت"}
@@ -1496,9 +1467,9 @@ sd{
             ls{"وڌيڪ مشرقي يورپي وقت"}
         }
         "meta:Europe_Western"{
-            ld{"مغربي يورپي ڏينهن جو وقت"}
-            lg{"مغربي يورپي وقت"}
-            ls{"مغربي يورپي معياري وقت"}
+            ld{"اولهه يورپي ڏينهن جو وقت"}
+            lg{"اولهه يورپي وقت"}
+            ls{"اولهه يورپي معياري وقت"}
         }
         "meta:Falkland"{
             ld{"فاڪ لينڊ آئي لينڊ جي اونهاري جو وقت"}
@@ -1514,7 +1485,7 @@ sd{
             ls{"فرانسيسي گيانا جو وقت"}
         }
         "meta:French_Southern"{
-            ls{"فرانسيسي ڏاکڻي ۽ انٽارڪٽڪ جو وقت"}
+            ls{"فرانسيسي ڏاکڻيو ۽ انٽارڪٽڪ وقت"}
         }
         "meta:GMT"{
             ls{"گرين وچ مين ٽائيم"}
@@ -1544,7 +1515,7 @@ sd{
             ls{"مغربي گرين لينڊ جو معياري وقت"}
         }
         "meta:Gulf"{
-            ls{"خلج معياري وقت"}
+            ls{"خليجي معياري وقت"}
         }
         "meta:Guyana"{
             ls{"گيانائي وقت"}
@@ -1602,11 +1573,14 @@ sd{
             lg{"جاپان جو وقت"}
             ls{"جاپان جو معياري وقت"}
         }
+        "meta:Kazakhstan"{
+            ls{"قزاقستان وقت"}
+        }
         "meta:Kazakhstan_Eastern"{
             ls{"اوڀر قزاقستان جو وقت"}
         }
         "meta:Kazakhstan_Western"{
-            ls{"اولهه قزاقستان جو وقت"}
+            ls{"اولهه قازقستان جو وقت"}
         }
         "meta:Korea"{
             ld{"ڪوريا جي ڏينهن جو وقت"}
@@ -1622,7 +1596,7 @@ sd{
             ls{"ڪریسنویارسڪ جو معياري وقت"}
         }
         "meta:Kyrgystan"{
-            ls{"ڪرگزستان جو وقت"}
+            ls{"ڪرغزستان جو وقت"}
         }
         "meta:Line_Islands"{
             ls{"لائن آئي لينڊ جو وقت"}
@@ -1631,9 +1605,6 @@ sd{
             ld{"لورڊ هووي جي ڏينهن جو وقت"}
             lg{"لورڊ هووي جو وقت"}
             ls{"لورڊ هووي جو معياري وقت"}
-        }
-        "meta:Macquarie"{
-            ls{"مڪوائري آئي لينڊ جو وقت"}
         }
         "meta:Magadan"{
             ld{"مگادان جي ڏينهن جي وقت"}
@@ -1659,11 +1630,6 @@ sd{
         }
         "meta:Mawson"{
             ls{"مائوسن جو وقت"}
-        }
-        "meta:Mexico_Northwest"{
-            ld{"شمالي مغربي ميڪسيڪو جي ڏينهن جو وقت"}
-            lg{"شمالي مغربي ميڪسيڪو جو وقت"}
-            ls{"شمالي مغربي ميڪسيڪو جو معياري وقت"}
         }
         "meta:Mexico_Pacific"{
             ld{"ميڪسيڪن پيسيفڪ جي ڏينهن جو وقت"}
@@ -1757,9 +1723,9 @@ sd{
             ls{"فونيڪس آئي لينڊ جو وقت"}
         }
         "meta:Pierre_Miquelon"{
-            ld{"سینٽ پیئر و میڪوئیلون جي ڏينهن جو وقت"}
-            lg{"سينٽ پيئر ائن ميڪوئلون جو وقت"}
-            ls{"سینٽ پیئر اَئن میڪوئلون جو مانائتو وقت"}
+            ld{"سينٽ پيئر ۽ ميڪلون جي ڏينهن جو وقت"}
+            lg{"سينٽ پيئر ۽ ميڪلون جو وقت"}
+            ls{"سينٽ پيئر ۽ ميڪلون جو معياري وقت"}
         }
         "meta:Pitcairn"{
             ls{"پٽڪيرن جو وقت"}
@@ -1768,7 +1734,7 @@ sd{
             ls{"پوناپي جو وقت"}
         }
         "meta:Pyongyang"{
-            ls{"شيانگ يانگ جو وقت"}
+            ls{"پيانگ يانگ جو وقت"}
         }
         "meta:Reunion"{
             ls{"ري يونين جو وقت"}
@@ -1881,10 +1847,9 @@ sd{
             lg{"يڪاٽيرنبرگ جو وقت"}
             ls{"يڪاٽيرنبرگ جو معياري وقت"}
         }
-        fallbackFormat{"{1} ({0})"}
-        gmtFormat{"GMT{0}"}
-        gmtZeroFormat{"GMT"}
-        hourFormat{"+HH:mm;-HH:mm"}
+        "meta:Yukon"{
+            ls{"يڪون جو وقت"}
+        }
         regionFormat{"{0} وقت"}
         regionFormatDaylight{"{0} ڏينهن جو وقت"}
         regionFormatStandard{"{0} معياري وقت"}

@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 be{
     Countries{
         001{"Свет"}
@@ -275,7 +276,7 @@ be{
         UG{"Уганда"}
         UM{"Малыя Аддаленыя астравы ЗША"}
         UN{"Арганізацыя Аб’яднаных Нацый"}
-        US{"Злучаныя Штаты"}
+        US{"Злучаныя Штаты Амерыкі"}
         UY{"Уругвай"}
         UZ{"Узбекістан"}
         VA{"Ватыкан"}
@@ -288,7 +289,7 @@ be{
         WF{"Уоліс і Футуна"}
         WS{"Самоа"}
         XA{"Псеўдаакцэнты"}
-        XB{"Псеўда-Bidi"}
+        XB{"Псеўдадвухнапрамкавы"}
         XK{"Косава"}
         YE{"Емен"}
         YT{"Маёта"}
@@ -296,6 +297,9 @@ be{
         ZM{"Замбія"}
         ZW{"Зімбабвэ"}
         ZZ{"Невядомы рэгіён"}
+    }
+    Countries%chagos{
+        IO{"Архіпелаг Чагас"}
     }
     Countries%short{
         HK{"Ганконг"}
@@ -309,8 +313,8 @@ be{
         CI{"Бераг Слановай Косці"}
         CZ{"Чэшская Рэспубліка"}
         FK{"Фалклендскія (Мальвінскія) астравы"}
+        NZ{"Аотэароа (Новая Зеландыя)"}
         SZ{"Свазіленд"}
         TL{"Усходні Тымор"}
     }
-    Version{"37"}
 }

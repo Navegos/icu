@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 ky{
     Countries{
         001{"Дүйнө"}
@@ -118,7 +119,7 @@ ky{
         GB{"Улуу Британия"}
         GD{"Гренада"}
         GE{"Грузия"}
-        GF{"Француздук Гвиана"}
+        GF{"Франция Гвианасы"}
         GG{"Гернси"}
         GH{"Гана"}
         GI{"Гибралтар"}
@@ -153,7 +154,7 @@ ky{
         JE{"Жерси"}
         JM{"Ямайка"}
         JO{"Иордания"}
-        JP{"Япония"}
+        JP{"Жапония"}
         KE{"Кения"}
         KG{"Кыргызстан"}
         KH{"Камбоджа"}
@@ -187,7 +188,7 @@ ky{
         ML{"Мали"}
         MM{"Мьянма (Бирма)"}
         MN{"Монголия"}
-        MO{"Макау Кытай ААА"}
+        MO{"Макао Кытай ААА"}
         MP{"Түндүк Мариана аралдары"}
         MQ{"Мартиника"}
         MR{"Мавритания"}
@@ -300,7 +301,7 @@ ky{
     Countries%short{
         GB{"УБ"}
         HK{"Гонконг"}
-        MO{"Макау"}
+        MO{"Макао"}
         PS{"Палестина"}
         US{"АКШ"}
     }
@@ -311,6 +312,6 @@ ky{
         CZ{"Чех Республикасы"}
         FK{"Фолкленд (Мальвина) аралдары"}
         TL{"Чыгыш Тимор"}
+        TR{"Түркие"}
     }
-    Version{"37"}
 }

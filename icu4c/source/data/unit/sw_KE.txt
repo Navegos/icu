@@ -1,12 +1,9 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 sw_KE{
-    Version{"37"}
     units{
         duration{
-            decade{
-                dnam{"mwongo"}
-            }
             microsecond{
                 dnam{"maikrosekunde"}
                 one{"maikroseunde {0}"}
@@ -37,19 +34,41 @@ sw_KE{
                 one{"miaka {0} ya mwanga"}
                 other{"miaka {0} ya mwanga"}
             }
+            solar-radius{
+                one{"nusu kipenyo {0} cha jua"}
+                other{"nusu vipenyo {0} vya jua"}
+            }
+        }
+        pressure{
+            pascal{
+                one{"Pa {0}"}
+                other{"Pa {0}"}
+            }
+        }
+    }
+    unitsNarrow{
+        area{
+            square-centimeter{
+                dnam{"cm²"}
+            }
+        }
+        consumption{
+            mile-per-gallon-imperial{
+                dnam{"maili/gal Imp"}
+            }
+        }
+        length{
+            astronomical-unit{
+                dnam{"kipimo cha astronomia"}
+            }
             micrometer{
                 dnam{"maikromita"}
                 one{"maikromita {0}"}
                 other{"maikromita {0}"}
             }
-            mile-scandinavian{
-                one{"maili {0} ya skandinavia"}
-                other{"maili {0} za skandinavia"}
-            }
-            solar-radius{
-                dnam{"nusu vipenyo vya jua"}
-                one{"nusu kipenyo {0} cha jua"}
-                other{"nusu vipenyo {0} vya jua"}
+            millimeter{
+                one{"mm{0}"}
+                other{"mm{0}"}
             }
         }
         pressure{
@@ -58,17 +77,9 @@ sw_KE{
                 one{"baa {0}"}
                 other{"baa {0}"}
             }
-            pascal{
-                one{"Pa {0}"}
-                other{"Pa {0}"}
-            }
-        }
-    }
-    unitsNarrow{
-        length{
-            millimeter{
-                one{"mm{0}"}
-                other{"mm{0}"}
+            millimeter-ofhg{
+                one{"mm Hg {0}"}
+                other{"mm Hg {0}"}
             }
         }
     }
@@ -94,7 +105,7 @@ sw_KE{
             }
             pixel{
                 one{"pikseli {0}"}
-                other{"pikseli {0}"}
+                other{"px {0}"}
             }
         }
         length{
@@ -106,18 +117,9 @@ sw_KE{
                 one{"maikromita {0}"}
                 other{"maikromita {0}"}
             }
-            mile-scandinavian{
-                one{"smi {0}"}
-                other{"smi {0}"}
-            }
             parsec{
-                one{"{0} pc"}
+                one{"kila sekunde {0}"}
                 other{"kila sekunde {0}"}
-            }
-            solar-radius{
-                dnam{"nusu vipenyo vya jua"}
-                one{"R☉ {0}"}
-                other{"R☉ {0}"}
             }
         }
         pressure{
@@ -126,9 +128,9 @@ sw_KE{
                 one{"baa {0}"}
                 other{"baa {0}"}
             }
-            inch-ofhg{
-                one{"inHg {0}"}
-                other{"inHg {0}"}
+            millimeter-ofhg{
+                one{"mm Hg {0}"}
+                other{"mm Hg {0}"}
             }
         }
     }

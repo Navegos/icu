@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 mzn{
     Countries{
         001{"جهون"}
@@ -143,7 +144,6 @@ mzn{
         IL{"ایسراییل"}
         IM{"من ِجزیره"}
         IN{"هند"}
-        IO{"بریتانیای هند ِاوقیانوس ِمناطق"}
         IQ{"عراق"}
         IR{"ایران"}
         IS{"ایسلند"}
@@ -304,5 +304,4 @@ mzn{
         FK{"فالکلند (مالویناس)"}
         TL{"شرقی تیمور"}
     }
-    Version{"37"}
 }

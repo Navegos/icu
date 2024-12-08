@@ -2,7 +2,7 @@
 #  ********************************************************************
 #  * COPYRIGHT:
 #  * © 2016 and later: Unicode, Inc. and others.
-#  * License & terms of use: http://www.unicode.org/copyright.html#License
+#  * License & terms of use: http://www.unicode.org/copyright.html
 #  * Copyright (c) 2006, International Business Machines Corporation and
 #  * others. All Rights Reserved.
 #  ********************************************************************
@@ -62,7 +62,7 @@ sub getMean {
 }
 
 # Return a 99% error based on the t distribution.  The dataset
-# is desribed as getMean() +/- getError().
+# is described as getMean() +/- getError().
 sub getError {
     my $self = shift;
     return $self->{_error} * $self->{_scale};

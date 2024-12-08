@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 fur{
     Countries{
         001{"Mont"}
@@ -140,7 +141,6 @@ fur{
         IL{"Israêl"}
         IM{"Isule di Man"}
         IN{"India"}
-        IO{"Teritori britanic dal Ocean Indian"}
         IQ{"Iraq"}
         IR{"Iran"}
         IS{"Islande"}
@@ -294,5 +294,4 @@ fur{
         CG{"Congo (Republiche)"}
         FK{"Isulis Falkland (Isulis Malvinas)"}
     }
-    Version{"37"}
 }

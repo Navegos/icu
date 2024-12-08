@@ -48,12 +48,14 @@ void NewResourceBundleTest::runIndexedTest( int32_t index, UBool exec, const cha
     TESTCASE_AUTO(TestTrace);
 #endif
 
+    TESTCASE_AUTO(TestOpenDirectFillIn);
+    TESTCASE_AUTO(TestStackReuse);
     TESTCASE_AUTO_END;
 }
 
 //***************************************************************************************
 
-static const UChar kErrorUChars[] = { 0x45, 0x52, 0x52, 0x4f, 0x52, 0 };
+static const char16_t kErrorUChars[] = { 0x45, 0x52, 0x52, 0x4f, 0x52, 0 };
 static const int32_t kErrorLength = 5;
 static const int32_t kERROR_COUNT = -1234567;
 
@@ -124,7 +126,7 @@ itoa(int32_t i, char* buf)
     char* p = buf;
     do
     {
-        *p++ = (char)('0' + (i % 10));
+        *p++ = static_cast<char>('0' + (i % 10));
         i /= 10;
     }
     while (i);
@@ -162,12 +164,12 @@ param[] =
     // "IN" means inherits
     // "NE" or "ne" means "does not exist"
 
-    { "root",       0,   U_ZERO_ERROR,             e_Root,      { TRUE, FALSE, FALSE }, { TRUE, FALSE, FALSE } },
-    { "te",         0,   U_ZERO_ERROR,             e_te,        { FALSE, TRUE, FALSE }, { TRUE, TRUE, FALSE  } },
-    { "te_IN",      0,   U_ZERO_ERROR,             e_te_IN,     { FALSE, FALSE, TRUE }, { TRUE, TRUE, TRUE   } },
-    { "te_NE",      0,   U_USING_FALLBACK_WARNING, e_te,        { FALSE, TRUE, FALSE }, { TRUE, TRUE, FALSE  } },
-    { "te_IN_NE",   0,   U_USING_FALLBACK_WARNING, e_te_IN,     { FALSE, FALSE, TRUE }, { TRUE, TRUE, TRUE   } },
-    { "ne",         0,   U_USING_DEFAULT_WARNING,  e_Root,      { TRUE, FALSE, FALSE }, { TRUE, FALSE, FALSE } }
+    { "root",       nullptr,   U_ZERO_ERROR,             e_Root,      { true, false, false }, { true, false, false } },
+    { "te",         nullptr,   U_ZERO_ERROR,             e_te,        { false, true, false }, { true, true, false  } },
+    { "te_IN",      nullptr,   U_ZERO_ERROR,             e_te_IN,     { false, false, true }, { true, true, true   } },
+    { "te_NE",      nullptr,   U_USING_FALLBACK_WARNING, e_te,        { false, true, false }, { true, true, false  } },
+    { "te_IN_NE",   nullptr,   U_USING_FALLBACK_WARNING, e_te_IN,     { false, false, true }, { true, true, true   } },
+    { "ne",         nullptr,   U_USING_DEFAULT_WARNING,  e_Root,      { true, false, false }, { true, false, false } }
 };
 
 static int32_t bundles_count = UPRV_LENGTHOF(param);
@@ -181,16 +183,16 @@ static int32_t bundles_count = UPRV_LENGTHOF(param);
 static uint32_t
 randul()
 {
-    static UBool initialized = FALSE;
+    static UBool initialized = false;
     if (!initialized)
     {
-        srand((unsigned)time(NULL));
-        initialized = TRUE;
+        srand(static_cast<unsigned>(time(nullptr)));
+        initialized = true;
     }
     // Assume rand has at least 12 bits of precision
     uint32_t l = 0;
     for (uint32_t i=0; i<sizeof(l); ++i)
-        ((char*)&l)[i] = (char)((rand() & 0x0FF0) >> 4);
+        reinterpret_cast<char*>(&l)[i] = static_cast<char>((rand() & 0x0FF0) >> 4);
     return l;
 }
 
@@ -200,7 +202,7 @@ randul()
 static double
 randd()
 {
-    return (double)(randul() / ULONG_MAX);
+    return static_cast<double>(randul() / ULONG_MAX);
 }
 
 /**
@@ -208,7 +210,7 @@ randd()
  */
 static int32_t randi(int32_t n)
 {
-    return (int32_t)(randd() * n);
+    return static_cast<int32_t>(randd() * n);
 }
 
 //***************************************************************************************
@@ -220,7 +222,7 @@ NewResourceBundleTest::NewResourceBundleTest()
 : pass(0),
   fail(0)
 {
-    if (param[5].locale == NULL) {
+    if (param[5].locale == nullptr) {
         param[0].locale = new Locale("root");
         param[1].locale = new Locale("te");
         param[2].locale = new Locale("te", "IN");
@@ -236,7 +238,7 @@ NewResourceBundleTest::~NewResourceBundleTest()
         int idx;
         for (idx = 0; idx < UPRV_LENGTHOF(param); idx++) {
             delete param[idx].locale;
-            param[idx].locale = NULL;
+            param[idx].locale = nullptr;
         }
     }
 }
@@ -260,14 +262,14 @@ NewResourceBundleTest::TestResourceBundles()
         Locale::setDefault(Locale("en_US"), status);
     }
 
-    testTag("only_in_Root", TRUE, FALSE, FALSE);
-    testTag("only_in_te", FALSE, TRUE, FALSE);
-    testTag("only_in_te_IN", FALSE, FALSE, TRUE);
-    testTag("in_Root_te", TRUE, TRUE, FALSE);
-    testTag("in_Root_te_te_IN", TRUE, TRUE, TRUE);
-    testTag("in_Root_te_IN", TRUE, FALSE, TRUE);
-    testTag("in_te_te_IN", FALSE, TRUE, TRUE);
-    testTag("nonexistent", FALSE, FALSE, FALSE);
+    testTag("only_in_Root", true, false, false);
+    testTag("only_in_te", false, true, false);
+    testTag("only_in_te_IN", false, false, true);
+    testTag("in_Root_te", true, true, false);
+    testTag("in_Root_te_te_IN", true, true, true);
+    testTag("in_Root_te_IN", true, false, true);
+    testTag("in_te_te_IN", false, true, true);
+    testTag("nonexistent", false, false, false);
     logln("Passed: %d\nFailed: %d", pass, fail);
 
     /* Restore the default locale for the other tests. */
@@ -294,7 +296,7 @@ NewResourceBundleTest::TestConstruction()
         Locale::setDefault(Locale("en_US"), err);
     }
 
-    ResourceBundle  test1((UnicodeString)testdatapath, err);
+    ResourceBundle test1(UnicodeString(testdatapath), err);
     ResourceBundle  test2(testdatapath, locale, err);
     
     UnicodeString   result1;
@@ -323,7 +325,7 @@ NewResourceBundleTest::TestConstruction()
     char *versionID1 = new char[1 + strlen(U_ICU_VERSION) + strlen(version1)]; // + 1 for zero byte
     char *versionID2 = new char[1 + strlen(U_ICU_VERSION) + strlen(version2)]; // + 1 for zero byte
 
-    strcpy(versionID1, "44.0");  // hardcoded, please change if the default.txt file or ResourceBundle::kVersionSeparater is changed.
+    strcpy(versionID1, "45.0");  // hardcoded, please change if the default.txt file or ResourceBundle::kVersionSeparater is changed.
 
     strcpy(versionID2, "55.0");  // hardcoded, please change if the te_IN.txt file or ResourceBundle::kVersionSeparater is changed.
 
@@ -467,7 +469,7 @@ equalRB(ResourceBundle &a, ResourceBundle &b) {
             a.getString(status)==b.getString(status) :
             type==URES_INT ?
                 a.getInt(status)==b.getInt(status) :
-                TRUE;
+                true;
 }
 
 void
@@ -511,7 +513,7 @@ NewResourceBundleTest::TestOtherAPI(){
 
     logln("Testing ResourceBundle(UErrorCode)\n");
     ResourceBundle defaultresource(err);
-    ResourceBundle explicitdefaultresource(NULL, Locale::getDefault(), err);
+    ResourceBundle explicitdefaultresource(nullptr, Locale::getDefault(), err);
     if(U_FAILURE(err)){
         errcheckln(err, "Construction of default resourcebundle failed - %s", u_errorName(err));
         return;
@@ -535,26 +537,28 @@ NewResourceBundleTest::TestOtherAPI(){
         errln("copy construction failed\n");
     }
 
-    ResourceBundle defaultSub = defaultresource.get((int32_t)0, err);
-    ResourceBundle defSubCopy(defaultSub);
-    if(strcmp(defSubCopy.getName(), defaultSub.getName() ) !=0  ||
-        strcmp(defSubCopy.getLocale().getName(), defaultSub.getLocale().getName() ) !=0  ){
-        errln("copy construction for subresource failed\n");
+    {
+        LocalPointer<ResourceBundle> p(defaultresource.clone());
+        if(p.getAlias() == &defaultresource || !equalRB(*p, defaultresource)) {
+            errln("ResourceBundle.clone() failed");
+        }
     }
 
-    ResourceBundle *p;
-
-    p = defaultresource.clone();
-    if(p == &defaultresource || !equalRB(*p, defaultresource)) {
-        errln("ResourceBundle.clone() failed");
+    // The following tests involving defaultSub may no longer be exercised if
+    // defaultresource is for a locale like en_US with an empty resource bundle.
+    // (Before ICU-21028 such a bundle would have contained at least a Version string.)
+    if(defaultresource.getSize() != 0) {
+        ResourceBundle defaultSub = defaultresource.get(static_cast<int32_t>(0), err);
+        ResourceBundle defSubCopy(defaultSub);
+        if(strcmp(defSubCopy.getName(), defaultSub.getName()) != 0 ||
+                strcmp(defSubCopy.getLocale().getName(), defaultSub.getLocale().getName() ) != 0) {
+            errln("copy construction for subresource failed\n");
+        }
+        LocalPointer<ResourceBundle> p(defaultSub.clone());
+        if(p.getAlias() == &defaultSub || !equalRB(*p, defaultSub)) {
+            errln("2nd ResourceBundle.clone() failed");
+        }
     }
-    delete p;
-
-    p = defaultSub.clone();
-    if(p == &defaultSub || !equalRB(*p, defaultSub)) {
-        errln("2nd ResourceBundle.clone() failed");
-    }
-    delete p;
 
     UVersionInfo ver;
     copyRes.getVersion(ver);
@@ -563,7 +567,7 @@ NewResourceBundleTest::TestOtherAPI(){
 
     logln("Testing C like UnicodeString APIs\n");
 
-    UResourceBundle *testCAPI = NULL, *bundle = NULL, *rowbundle = NULL, *temp = NULL;
+    UResourceBundle *testCAPI = nullptr, *bundle = nullptr, *rowbundle = nullptr, *temp = nullptr;
     err = U_ZERO_ERROR;
     const char* data[]={
         "string_in_Root_te_te_IN",   "1",
@@ -594,7 +598,7 @@ NewResourceBundleTest::TestOtherAPI(){
             err=U_ZERO_ERROR;
             bundle = ures_getByKey(testCAPI, data[i], bundle, &err); 
             if(!U_FAILURE(err)){
-                const char* key = NULL;
+                const char* key = nullptr;
                 action = "te_IN";
                 action +=".getKey()";
 
@@ -650,7 +654,7 @@ NewResourceBundleTest::TestOtherAPI(){
         assertTrue("ures_getUnicodeString(failure).isBogus()",
                    ures_getUnicodeString(testCAPI, &failure).isBogus());
         assertTrue("ures_getNextUnicodeString(failure).isBogus()",
-                   ures_getNextUnicodeString(testCAPI, NULL, &failure).isBogus());
+                   ures_getNextUnicodeString(testCAPI, nullptr, &failure).isBogus());
         assertTrue("ures_getUnicodeStringByIndex(failure).isBogus()",
                    ures_getUnicodeStringByIndex(testCAPI, 999, &failure).isBogus());
         assertTrue("ures_getUnicodeStringByKey(failure).isBogus()",
@@ -701,7 +705,7 @@ NewResourceBundleTest::testTag(const char* frag,
     if(U_FAILURE(status))
     {
         dataerrln("Could not load testdata.dat %s " + UnicodeString(u_errorName(status)));
-        return FALSE;
+        return false;
     }
 
     for (i=0; i<bundles_count; ++i)
@@ -767,7 +771,7 @@ NewResourceBundleTest::testTag(const char* frag,
         status = U_ZERO_ERROR;
         UnicodeString string = theBundle.getStringEx(tag, status);
         if(U_FAILURE(status)) {
-            string.setTo(TRUE, kErrorUChars, kErrorLength);
+            string.setTo(true, kErrorUChars, kErrorLength);
         }
 
         CONFIRM_UErrorCode(status, expected_resource_status);
@@ -982,7 +986,7 @@ NewResourceBundleTest::testTag(const char* frag,
 
             for(index=0; index <tag_count; index++){
                 ResourceBundle tagelement=tags.get(index, status);
-                const char *tkey=NULL;
+                const char *tkey=nullptr;
                 UnicodeString value=tagelement.getNextString(&tkey, status);
                 UnicodeString key(tkey);
                 logln("tag = " + key + ", value = " + value );
@@ -1047,7 +1051,7 @@ NewResourceBundleTest::testTag(const char* frag,
         CONFIRM_EQ(count, tag_count);
 
     }
-    return (UBool)(failOrig == fail);
+    return failOrig == fail;
 }
 
 void
@@ -1068,14 +1072,14 @@ NewResourceBundleTest::TestNewTypes() {
     char action[256];
     const char* testdatapath;
     UErrorCode status = U_ZERO_ERROR;
-    uint8_t *binResult = NULL;
+    uint8_t *binResult = nullptr;
     int32_t len = 0;
     int32_t i = 0;
     int32_t intResult = 0;
     uint32_t uintResult = 0;
-    UChar expected[] = { 'a','b','c','\0','d','e','f' };
+    char16_t expected[] = { 'a','b','c','\0','d','e','f' };
     const char* expect ="tab:\t cr:\r ff:\f newline:\n backslash:\\\\ quote=\\\' doubleQuote=\\\" singlequoutes=''";
-    UChar uExpect[200];
+    char16_t uExpect[200];
 
     testdatapath=loadTestData(status);
 
@@ -1099,7 +1103,7 @@ NewResourceBundleTest::TestNewTypes() {
     /* if everything is working correctly, the size of this string */
     /* should be 7. Everything else is a wrong answer, esp. 3 and 6*/
 
-    strcpy(action, "getting and testing of string with embeded zero");
+    strcpy(action, "getting and testing of string with embedded zero");
     ResourceBundle res = theBundle.get("zerotest", status);
     CONFIRM_UErrorCode(status, U_ZERO_ERROR);
     CONFIRM_EQ(res.getType(), URES_STRING);
@@ -1120,7 +1124,7 @@ NewResourceBundleTest::TestNewTypes() {
     res = theBundle.get("binarytest", status);
     CONFIRM_UErrorCode(status, U_ZERO_ERROR);
     CONFIRM_EQ(res.getType(), URES_BINARY);
-    binResult=(uint8_t*)res.getBinary(len, status);
+    binResult = const_cast<uint8_t*>(res.getBinary(len, status));
     if(U_SUCCESS(status)){
         CONFIRM_UErrorCode(status, U_ZERO_ERROR);
         CONFIRM_EQ(len, 15);
@@ -1133,7 +1137,7 @@ NewResourceBundleTest::TestNewTypes() {
     res = theBundle.get("importtest",status);
     CONFIRM_UErrorCode(status, U_ZERO_ERROR);
     CONFIRM_EQ(res.getType(), URES_BINARY);
-    binResult=(uint8_t*)res.getBinary(len, status);
+    binResult = const_cast<uint8_t*>(res.getBinary(len, status));
     if(U_SUCCESS(status)){
         CONFIRM_UErrorCode(status, U_ZERO_ERROR);
         CONFIRM_EQ(len, 15);
@@ -1193,7 +1197,7 @@ NewResourceBundleTest::TestNewTypes() {
         UnicodeString str = theBundle.getStringEx("testescape",status);
         CONFIRM_UErrorCode(status, U_ZERO_ERROR);
         if(U_SUCCESS(status)){
-            u_charsToUChars(expect,uExpect,(int32_t)uprv_strlen(expect)+1);
+            u_charsToUChars(expect, uExpect, static_cast<int32_t>(uprv_strlen(expect)) + 1);
             if(str.compare(uExpect)!=0){
                 errln("Did not get the expected string for testescape expected. Expected : " 
                     +UnicodeString(uExpect )+ " Got: " + str);
@@ -1205,7 +1209,7 @@ NewResourceBundleTest::TestNewTypes() {
         UnicodeString str = theBundle.getStringEx("test_underscores",status);
         expect ="test message ....";
         CONFIRM_UErrorCode(status, U_ZERO_ERROR);
-        u_charsToUChars(expect,uExpect,(int32_t)uprv_strlen(expect)+1);
+        u_charsToUChars(expect, uExpect, static_cast<int32_t>(uprv_strlen(expect)) + 1);
         if(str.compare(uExpect)!=0){
             errln("Did not get the expected string for test_underscores.\n");
         }
@@ -1218,7 +1222,7 @@ void
 NewResourceBundleTest::TestGetByFallback() {
     UErrorCode status = U_ZERO_ERROR;
 
-    ResourceBundle heRes(NULL, "he", status);
+    ResourceBundle heRes(nullptr, "he", status);
 
     heRes.getWithFallback("calendar", status).getWithFallback("islamic-civil", status).getWithFallback("DateTime", status);
     if(U_SUCCESS(status)) {
@@ -1232,7 +1236,7 @@ NewResourceBundleTest::TestGetByFallback() {
     }
     status = U_ZERO_ERROR;
 
-    ResourceBundle rootRes(NULL, "root", status);
+    ResourceBundle rootRes(nullptr, "root", status);
     rootRes.getWithFallback("calendar", status).getWithFallback("islamic-civil", status).getWithFallback("DateTime", status);
     if(U_SUCCESS(status)) {
         errln("Root's Islamic-civil's DateTime resource exists. How did it get here?\n");
@@ -1397,11 +1401,8 @@ void NewResourceBundleTest::TestFilter() {
 
 void NewResourceBundleTest::TestIntervalAliasFallbacks() {
     const char* locales[] = {
-        // Thee will not cause infinity loop
         "en",
         "ja",
-
-        // These will cause infinity loop
         "fr_CA",
         "en_150",
         "es_419",
@@ -1415,11 +1416,8 @@ void NewResourceBundleTest::TestIntervalAliasFallbacks() {
         "zh_TW",
     };
     const char* calendars[] = {
-        // These won't cause infinity loop
         "gregorian",
         "chinese",
-
-        // These will cause infinity loop
         "islamic",
         "islamic-civil",
         "islamic-tbla",
@@ -1432,7 +1430,7 @@ void NewResourceBundleTest::TestIntervalAliasFallbacks() {
 
     for (int lidx = 0; lidx < UPRV_LENGTHOF(locales); lidx++) {
         UErrorCode status = U_ZERO_ERROR;
-        UResourceBundle *rb = ures_open(NULL, locales[lidx], &status);
+        UResourceBundle *rb = ures_open(nullptr, locales[lidx], &status);
         if (U_FAILURE(status)) {
             errln("Cannot open bundle for locale %s", locales[lidx]);
             break;
@@ -1442,10 +1440,8 @@ void NewResourceBundleTest::TestIntervalAliasFallbacks() {
             key.append("calendar/", status);
             key.append(calendars[cidx], status);
             key.append("/intervalFormats/fallback", status);
-            if (! logKnownIssue("20400")) {
-                int32_t resStrLen = 0;
-                ures_getStringByKeyWithFallback(rb, key.data(), &resStrLen, &status);
-            }
+            int32_t resStrLen = 0;
+            ures_getStringByKeyWithFallback(rb, key.data(), &resStrLen, &status);
             if (U_FAILURE(status)) {
                 errln("Cannot ures_getStringByKeyWithFallback('%s') on locale %s",
                       key.data(), locales[lidx]);
@@ -1493,7 +1489,7 @@ void NewResourceBundleTest::TestTrace() {
 
     assertEquals("Start position stability coverage", 0x3000, UTRACE_UDATA_START);
 
-    const void* context;
+    const void* context = nullptr;
     utrace_setFunctions(context, nullptr, nullptr, traceData);
     utrace_setLevel(UTRACE_VERBOSE);
 
@@ -1536,5 +1532,61 @@ void NewResourceBundleTest::TestTrace() {
 
 #endif
 
-//eof
+void NewResourceBundleTest::TestOpenDirectFillIn() {
+    // Test that ures_openDirectFillIn() opens a stack allocated resource bundle, similar to ures_open().
+    // Since ures_openDirectFillIn is just a wrapper function, this is just a very basic test copied from
+    // the crestst.c/TestOpenDirect test.
+    // ICU-20769: This test was moved to C++ intltest while
+    // turning UResourceBundle from a C struct into a C++ class.
+    IcuTestErrorCode errorCode(*this, "TestOpenDirectFillIn");
+    UResourceBundle *item;
+    UResourceBundle idna_rules;
+    ures_initStackObject(&idna_rules);
 
+    ures_openDirectFillIn(&idna_rules, loadTestData(errorCode), "idna_rules", errorCode);
+    if(errorCode.errDataIfFailureAndReset("ures_openDirectFillIn(\"idna_rules\") failed\n")) {
+        return;
+    }
+
+    if(0!=uprv_strcmp("idna_rules", ures_getLocale(&idna_rules, errorCode))) {
+        errln("ures_openDirectFillIn(\"idna_rules\").getLocale()!=idna_rules");
+    }
+    errorCode.reset();
+
+    /* try an item in idna_rules, must work */
+    item=ures_getByKey(&idna_rules, "UnassignedSet", nullptr, errorCode);
+    if(errorCode.errDataIfFailureAndReset("translit_index.getByKey(local key) failed\n")) {
+        // pass
+    } else {
+        ures_close(item);
+    }
+
+    /* try an item in root, must fail */
+    item=ures_getByKey(&idna_rules, "ShortLanguage", nullptr, errorCode);
+    if(errorCode.isFailure()) {
+        errorCode.reset();
+    } else {
+        errln("idna_rules.getByKey(root key) succeeded but should have failed!");
+        ures_close(item);
+    }
+    ures_close(&idna_rules);
+}
+
+void NewResourceBundleTest::TestStackReuse() {
+    // This test will crash if this doesn't work. Results don't need testing.
+    // ICU-20769: This test was moved to C++ intltest while
+    // turning UResourceBundle from a C struct into a C++ class.
+    IcuTestErrorCode errorCode(*this, "TestStackReuse");
+    UResourceBundle table;
+    UResourceBundle *rb = ures_open(nullptr, "en_US", errorCode);
+
+    if(errorCode.errDataIfFailureAndReset("Could not load en_US locale.\n")) {
+        return;
+    }
+    ures_initStackObject(&table);
+    ures_getByKeyWithFallback(rb, "Types", &table, errorCode);
+    ures_getByKeyWithFallback(&table, "collation", &table, errorCode);
+    ures_close(rb);
+    ures_close(&table);
+    errorCode.reset();  // ignore U_MISSING_RESOURCE_ERROR etc.
+}

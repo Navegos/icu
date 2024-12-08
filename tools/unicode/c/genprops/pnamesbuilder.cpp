@@ -143,7 +143,7 @@ public:
 
 Property::Property(int32_t enumValue, const char *joinedAliases)
         : Value(enumValue, joinedAliases),
-          values(enumValue<UCHAR_BINARY_LIMIT ? VALUES_binprop : NULL),
+          values(enumValue<UCHAR_BINARY_LIMIT ? VALUES_binprop : nullptr),
           valueCount(enumValue<UCHAR_BINARY_LIMIT ? 2 : 0) {}
 
 // END DATA
@@ -152,7 +152,7 @@ Property::Property(int32_t enumValue, const char *joinedAliases)
 class PNamesPropertyNames : public PropertyNames {
 public:
     PNamesPropertyNames()
-            : valueMaps(NULL), bytesTries(NULL) {}
+            : valueMaps(nullptr), bytesTries(nullptr) {}
     void init(const int32_t *vm, const uint8_t *bt) {
         valueMaps=vm;
         bytesTries=bt;
@@ -172,7 +172,7 @@ class PNamesBuilderImpl : public PNamesBuilder {
 public:
     PNamesBuilderImpl(UErrorCode &errorCode)
             : valueMaps(errorCode), btb(errorCode), maxNameLength(0),
-              nameGroupToOffset(NULL) {}
+              nameGroupToOffset(nullptr) {}
 
     ~PNamesBuilderImpl() {
         uhash_close(nameGroupToOffset);
@@ -188,7 +188,7 @@ public:
             errorCode=U_INTERNAL_PROGRAM_ERROR;
             return;
         }
-        nameGroupToOffset=uhash_open(uhash_hashChars, uhash_compareChars, NULL, &errorCode);
+        nameGroupToOffset=uhash_open(uhash_hashChars, uhash_compareChars, nullptr, &errorCode);
         // Build main property aliases value map at value map offset 0,
         // so that we need not store another offset for it.
         UVector32 propEnums(errorCode);
@@ -453,7 +453,7 @@ static const UDataInfo dataInfo = {
 
     U_IS_BIG_ENDIAN,
     U_CHARSET_FAMILY,
-    sizeof(UChar),
+    sizeof(char16_t),
     0,
 
     { PNAME_SIG_0, PNAME_SIG_1, PNAME_SIG_2, PNAME_SIG_3 },
@@ -491,7 +491,7 @@ PNamesBuilderImpl::writeCSourceFile(const char *path, UErrorCode &errorCode) {
     if(U_FAILURE(errorCode)) { return; }
     FILE *f=usrc_create(path, "propname_data.h", 2016,
                         "icu/tools/unicode/c/genprops/pnamesbuilder.cpp");
-    if(f==NULL) {
+    if(f==nullptr) {
         errorCode=U_FILE_ACCESS_ERROR;
         return;
     }
@@ -501,13 +501,13 @@ PNamesBuilderImpl::writeCSourceFile(const char *path, UErrorCode &errorCode) {
 
     usrc_writeArray(f, "const int32_t PropNameData::indexes[%ld]={",
                     indexes, 32, PropNameData::IX_COUNT,
-                    "};\n\n");
+                    "", "};\n\n");
     usrc_writeArray(f, "const int32_t PropNameData::valueMaps[%ld]={\n",
                     valueMaps.getBuffer(), 32, valueMaps.size(),
-                    "\n};\n\n");
+                    "", "\n};\n\n");
     usrc_writeArray(f, "const uint8_t PropNameData::bytesTries[%ld]={\n",
                     bytesTries.data(), 8, bytesTries.length(),
-                    "\n};\n\n");
+                    "", "\n};\n\n");
     usrc_writeArrayOfMostlyInvChars(
         f, "const char PropNameData::nameGroups[%ld]={\n",
         nameGroups.data(), nameGroups.length(),
@@ -521,9 +521,9 @@ PNamesBuilderImpl::writeCSourceFile(const char *path, UErrorCode &errorCode) {
 
 PNamesBuilder *
 createPNamesBuilder(UErrorCode &errorCode) {
-    if(U_FAILURE(errorCode)) { return NULL; }
+    if(U_FAILURE(errorCode)) { return nullptr; }
     PNamesBuilder *pb=new PNamesBuilderImpl(errorCode);
-    if(pb==NULL) {
+    if(pb==nullptr) {
         errorCode=U_MEMORY_ALLOCATION_ERROR;
     }
     return pb;
@@ -551,8 +551,8 @@ int32_t PNamesPropertyNames::findProperty(int32_t property) const {
 }
 
 UBool PNamesPropertyNames::containsName(BytesTrie &trie, const char *name) const {
-    if(name==NULL) {
-        return FALSE;
+    if(name==nullptr) {
+        return false;
     }
     UStringTrieResult result=USTRINGTRIE_NO_VALUE;
     char c;
@@ -563,7 +563,7 @@ UBool PNamesPropertyNames::containsName(BytesTrie &trie, const char *name) const
             continue;
         }
         if(!USTRINGTRIE_HAS_NEXT(result)) {
-            return FALSE;
+            return false;
         }
         result=trie.next((uint8_t)c);
     }
