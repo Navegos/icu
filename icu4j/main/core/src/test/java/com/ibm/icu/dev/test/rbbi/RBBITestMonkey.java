@@ -55,14 +55,14 @@ public class RBBITestMonkey extends CoreTestFmwk {
     //
     abstract static class RBBIMonkeyKind {
         RBBIMonkeyKind() {
-            fSets = new  ArrayList();
-            fClassNames = new ArrayList();
-            fAppliedRules = new ArrayList();
+            fSets = new  ArrayList<>();
+            fClassNames = new ArrayList<>();
+            fAppliedRules = new ArrayList<>();
         }
 
         // Return a List of UnicodeSets, representing the character classes used
         //   for this type of iterator.
-        abstract  List  charClasses();
+        abstract  List<UnicodeSet>  charClasses();
 
         // Set the test text on which subsequent calls to next() will operate
         abstract  void   setText(StringBuffer text);
@@ -207,7 +207,7 @@ public class RBBITestMonkey extends CoreTestFmwk {
         }
 
         @Override
-        List charClasses() {
+        List<UnicodeSet> charClasses() {
             return fSets;
         }
 
@@ -476,7 +476,7 @@ public class RBBITestMonkey extends CoreTestFmwk {
 
 
         @Override
-        List  charClasses() {
+        List<UnicodeSet> charClasses() {
             return fSets;
         }
 
@@ -1276,7 +1276,6 @@ public class RBBITestMonkey extends CoreTestFmwk {
                         fLF.contains(fText.codePointAt(breakObliviousPrevPosX2)) ||
                         fNL.contains(fText.codePointAt(breakObliviousPrevPosX2)) ||
                         fSP.contains(fText.codePointAt(breakObliviousPrevPosX2)) ||
-                        fGL.contains(fText.codePointAt(breakObliviousPrevPosX2)) ||
                         fZW.contains(fText.codePointAt(breakObliviousPrevPosX2))) {
                         setAppliedRule(pos, "LB 20a");
                         continue;
@@ -1285,7 +1284,8 @@ public class RBBITestMonkey extends CoreTestFmwk {
                             fCM.contains(fText.codePointAt(breakObliviousPrevPosX2))) {
                         breakObliviousPrevPosX2 = moveIndex32(fText, breakObliviousPrevPosX2, -1);
                     }
-                    if (fCB.contains(fText.codePointAt(breakObliviousPrevPosX2))) {
+                    if (fCB.contains(fText.codePointAt(breakObliviousPrevPosX2)) ||
+                            fGL.contains(fText.codePointAt(breakObliviousPrevPosX2))) {
                         setAppliedRule(pos, "LB 20a");
                         continue;
                     }
@@ -1762,7 +1762,7 @@ public class RBBITestMonkey extends CoreTestFmwk {
 
 
         @Override
-        List  charClasses() {
+        List<UnicodeSet> charClasses() {
             return fSets;
         }
     }
@@ -1845,7 +1845,7 @@ public class RBBITestMonkey extends CoreTestFmwk {
 
 
         @Override
-        List  charClasses() {
+        List<UnicodeSet> charClasses() {
             return fSets;
         }
 
@@ -2203,7 +2203,7 @@ public class RBBITestMonkey extends CoreTestFmwk {
         int              TESTSTRINGLEN = 500;
         StringBuffer     testText         = new StringBuffer();
         int              numCharClasses;
-        List             chClasses;
+        List<UnicodeSet> chClasses;
         @SuppressWarnings("unused")
         int              expectedCount    = 0;
         boolean[]        expectedBreaks   = new boolean[TESTSTRINGLEN*2 + 1];

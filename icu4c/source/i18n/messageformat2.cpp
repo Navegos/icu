@@ -336,13 +336,13 @@ void MessageFormatter::resolveSelectors(MessageContext& context, const Environme
     CHECK_ERROR(status);
     U_ASSERT(!dataModel.hasPattern());
 
-    const Expression* selectors = dataModel.getSelectorsInternal();
+    const VariableName* selectors = dataModel.getSelectorsInternal();
     // 1. Let res be a new empty list of resolved values that support selection.
     // (Implicit, since `res` is an out-parameter)
     // 2. For each expression exp of the message's selectors
     for (int32_t i = 0; i < dataModel.numSelectors(); i++) {
         // 2i. Let rv be the resolved value of exp.
-        ResolvedSelector rv = formatSelectorExpression(env, selectors[i], context, status);
+        ResolvedSelector rv = formatSelector(env, selectors[i], context, status);
         if (rv.hasSelector()) {
             // 2ii. If selection is supported for rv:
             // (True if this code has been reached)
@@ -469,8 +469,8 @@ void MessageFormatter::resolvePreferences(MessageContext& context, UVector& res,
             if (!key.isWildcard()) {
                 // 2ii(b)(a) Assert that key is a literal.
                 // (Not needed)
-                // 2ii(b)(b) Let `ks` be the resolved value of `key`.
-                ks = key.asLiteral().unquoted();
+                // 2ii(b)(b) Let `ks` be the resolved value of `key` in Unicode Normalization Form C.
+                ks = normalizeNFC(key.asLiteral().unquoted());
                 // 2ii(b)(c) Append `ks` as the last element of the list `keys`.
                 ksP.adoptInstead(create<UnicodeString>(std::move(ks), status));
                 CHECK_ERROR(status);
@@ -531,7 +531,7 @@ void MessageFormatter::filterVariants(const UVector& pref, UVector& vars, UError
             // 2i(c). Assert that `key` is a literal.
             // (Not needed)
             // 2i(d). Let `ks` be the resolved value of `key`.
-            UnicodeString ks = key.asLiteral().unquoted();
+            UnicodeString ks = normalizeNFC(key.asLiteral().unquoted());
             // 2i(e). Let `matches` be the list of strings at index `i` of `pref`.
             const UVector& matches = *(static_cast<UVector*>(pref[i])); // `matches` is a vector of strings
             // 2i(f). If `matches` includes `ks`
@@ -593,7 +593,7 @@ void MessageFormatter::sortVariants(const UVector& pref, UVector& vars, UErrorCo
                 // 5iii(c)(a). Assert that `key` is a literal.
                 // (Not needed)
                 // 5iii(c)(b). Let `ks` be the resolved value of `key`.
-                UnicodeString ks = key.asLiteral().unquoted();
+                UnicodeString ks = normalizeNFC(key.asLiteral().unquoted());
                 // 5iii(c)(c) Let matchpref be the integer position of ks in `matches`.
                 matchpref = vectorFind(matches, ks);
                 U_ASSERT(matchpref >= 0);
@@ -614,7 +614,10 @@ void MessageFormatter::sortVariants(const UVector& pref, UVector& vars, UErrorCo
 
 
 // Evaluate the operand
-ResolvedSelector MessageFormatter::resolveVariables(const Environment& env, const Operand& rand, MessageContext& context, UErrorCode &status) const {
+ResolvedSelector MessageFormatter::resolveVariables(const Environment& env,
+                                                    const Operand& rand,
+                                                    MessageContext& context,
+                                                    UErrorCode &status) const {
     if (U_FAILURE(status)) {
         return {};
     }
@@ -628,7 +631,13 @@ ResolvedSelector MessageFormatter::resolveVariables(const Environment& env, cons
     }
 
     // Must be variable
-    const VariableName& var = rand.asVariable();
+    return resolveVariables(env, rand.asVariable(), context, status);
+}
+
+ResolvedSelector MessageFormatter::resolveVariables(const Environment& env,
+                                                    const VariableName& var,
+                                                    MessageContext& context,
+                                                    UErrorCode &status) const {
     // Resolve the variable
     if (env.has(var)) {
         const Closure& referent = env.lookup(var);
@@ -691,13 +700,16 @@ ResolvedSelector MessageFormatter::resolveVariables(const Environment& env,
     }
 }
 
-ResolvedSelector MessageFormatter::formatSelectorExpression(const Environment& globalEnv, const Expression& expr, MessageContext& context, UErrorCode &status) const {
+ResolvedSelector MessageFormatter::formatSelector(const Environment& globalEnv,
+                                                  const VariableName& var,
+                                                  MessageContext& context,
+                                                  UErrorCode &status) const {
     if (U_FAILURE(status)) {
         return {};
     }
 
     // Resolve expression to determine if it's a function call
-    ResolvedSelector exprResult = resolveVariables(globalEnv, expr, context, status);
+    ResolvedSelector exprResult = resolveVariables(globalEnv, var, context, status);
 
     DynamicErrors& err = context.getErrors();
 

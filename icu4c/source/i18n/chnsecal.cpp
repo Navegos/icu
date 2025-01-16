@@ -130,7 +130,6 @@ ChineseCalendar::ChineseCalendar(const Locale& aLocale, UErrorCode& success)
 :   Calendar(TimeZone::forLocaleOrDefault(aLocale), aLocale, success),
     hasLeapMonthBetweenWinterSolstices(false)
 {
-    setTimeInMillis(getNow(), success); // Call this again now that the vtable is set up properly.
 }
 
 ChineseCalendar::ChineseCalendar(const ChineseCalendar& other) : Calendar(other) {
@@ -219,7 +218,9 @@ int32_t ChineseCalendar::handleGetExtendedYear(UErrorCode& status) {
     }
 
     int32_t year;
-    if (newestStamp(UCAL_ERA, UCAL_YEAR, kUnset) <= fStamp[UCAL_EXTENDED_YEAR]) {
+    // if UCAL_EXTENDED_YEAR is not older than UCAL_ERA nor UCAL_YEAR
+    if (newerField(UCAL_EXTENDED_YEAR, newerField(UCAL_ERA, UCAL_YEAR)) ==
+        UCAL_EXTENDED_YEAR) {
         year = internalGet(UCAL_EXTENDED_YEAR, 1); // Default to year 1
     } else {
         // adjust to the instance specific epoch
@@ -368,13 +369,9 @@ int64_t ChineseCalendar::handleComputeMonthStart(int32_t eyear, int32_t month, U
         isLeapMonth = internalGet(UCAL_IS_LEAP_MONTH) != 0;
     }
 
-    int32_t unusedMonth;
-    int32_t unusedDayOfWeek;
-    int32_t unusedDayOfMonth;
-    int32_t unusedDayOfYear;
-    Grego::dayToFields(newMoon, gyear, unusedMonth, unusedDayOfWeek, unusedDayOfMonth, unusedDayOfYear, status);
+    int32_t newMonthYear = Grego::dayToYear(newMoon, status);
 
-    struct MonthInfo monthInfo = computeMonthInfo(setting, gyear, newMoon, status);
+    struct MonthInfo monthInfo = computeMonthInfo(setting, newMonthYear, newMoon, status);
     if (U_FAILURE(status)) {
        return 0;
     }
@@ -1043,7 +1040,12 @@ void ChineseCalendar::offsetMonth(int32_t newMoon, int32_t dayOfMonth, int32_t d
     }
 
     // Find the target dayOfMonth
-    int32_t jd = newMoon + kEpochStartAsJulianDay - 1 + dayOfMonth;
+    int32_t jd;
+    if (uprv_add32_overflow(newMoon, kEpochStartAsJulianDay - 1, &jd) ||
+        uprv_add32_overflow(jd, dayOfMonth, &jd)) {
+        status = U_ILLEGAL_ARGUMENT_ERROR;
+        return;
+    }
 
     // Pin the dayOfMonth.  In this calendar all months are 29 or 30 days
     // so pinning just means handling dayOfMonth 30.

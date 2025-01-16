@@ -13,16 +13,6 @@
 
 using namespace icu::message2;
 
-/*
-  TODO: Tests need to be unified in a single format that
-  both ICU4C and ICU4J can use, rather than being embedded in code.
-
-  Tests are included in their current state to give a sense of
-  how much test coverage has been achieved. Most of the testing is
-  of the parser/serializer; the formatter needs to be tested more
-  thoroughly.
-*/
-
 void
 TestMessageFormat2::runIndexedTest(int32_t index, UBool exec,
                                   const char* &name, char* /*par*/) {
@@ -185,7 +175,8 @@ void TestMessageFormat2::testAPISimple() {
     argsBuilder["userName"] = message2::Formattable("Maria");
     args = MessageArguments(argsBuilder, errorCode);
 
-    mf = builder.setPattern(".match {$photoCount :number} {$userGender :string}\n\
+    mf = builder.setPattern(".input {$photoCount :number} .input {$userGender :string}\n\
+                      .match $photoCount $userGender\n                    \
                       1 masculine {{{$userName} added a new photo to his album.}}\n \
                       1 feminine {{{$userName} added a new photo to her album.}}\n \
                       1 * {{{$userName} added a new photo to their album.}}\n \
@@ -229,7 +220,8 @@ void TestMessageFormat2::testAPI() {
     TestUtils::runTestCase(*this, test, errorCode);
 
     // Pattern matching - plural
-    UnicodeString pattern = ".match {$photoCount :string} {$userGender :string}\n\
+    UnicodeString pattern = ".input {$photoCount :number} .input {$userGender :string}\n\
+                      .match $photoCount $userGender\n\
                       1 masculine {{{$userName} added a new photo to his album.}}\n \
                       1 feminine {{{$userName} added a new photo to her album.}}\n \
                       1 * {{{$userName} added a new photo to their album.}}\n \
@@ -250,7 +242,8 @@ void TestMessageFormat2::testAPI() {
     TestUtils::runTestCase(*this, test, errorCode);
 
     // Built-in functions
-    pattern = ".match {$photoCount :number} {$userGender :string}\n\
+    pattern = ".input {$photoCount :number} .input {$userGender :string}\n\
+               .match $photoCount $userGender\n \
                       1 masculine {{{$userName} added a new photo to his album.}}\n \
                       1 feminine {{{$userName} added a new photo to her album.}}\n \
                       1 * {{{$userName} added a new photo to their album.}}\n \
